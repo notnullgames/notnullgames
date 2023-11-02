@@ -1,0 +1,28 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import Cart from '@/components/Cart.jsx'
+
+<Callout emoji="🤷">
+These are general utilities I was not sure where else to put in docs.
+</Callout>
+
+
+<Tabs items={['Nim', 'C/C++']}>
+<Tab>
+```nim
+# log a string
+trace("OK, this works.")
+
+# log printf-style string
+trace("OK, this works: %d", 15)
+```
+</Tab>
+<Tab>
+```c
+// log a string
+trace("OK, this works.");
+
+// log printf-style string
+trace("OK, this works: %d", 15);
+```
+</Tab>
+</Tabs>
