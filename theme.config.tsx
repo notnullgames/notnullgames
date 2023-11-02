@@ -1,18 +1,23 @@
 import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import { DocsThemeConfig, Callout } from 'nextra-theme-docs'
+import Logo from '@/components/Logo.jsx'
 
-const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+export default {
+  logo: <><Logo height={50} width={70} /> notnullgames</>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/notnullgames/'
   },
-  chat: {
-    link: 'https://discord.com',
-  },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/notnullgames/notnullgames.github.io/blob/main/',
   footer: {
-    text: 'Nextra Docs Template',
+    text: `${new Date().getFullYear()} © notnullgames`
   },
+  banner: {
+    key: 'incomplete',
+    text: 'Keep in mind that we are still building things, so the docs could be totally wrong or incomplete.'
+  },
+  useNextSeoProps () {
+    return {
+      titleTemplate: '%s – notnullgames'
+    }
+  }
 }
-
-export default config
