@@ -1,0 +1,46 @@
+import { Callout } from 'nextra-theme-docs'
+
+<Callout emoji="🤣">
+Null0 is an easy & fun 2D game-engine that lets you write your game in many languages.<br/>
+It's fun to use, and a great way to learn new programming languages.
+</Callout>
+
+The basic idea is that you make your game in whatever language you like, and put that with your assets in a zip-file, and you can run it in libretro, or the standalone runtime, or on the web.
+
+
+### supported
+
+We currently fully support these languages:
+
+- [Nim](languages/nim)
+
+### planned
+
+These are planned:
+
+- [AssemblyScript](https://www.assemblyscript.org/)
+- [C / C++](https://devdocs.io/c/)
+- [C3](https://c3-lang.org/)
+- [D](https://dlang.org/)
+- [Go](https://tinygo.org/)
+- [Lua](https://nelua.io/)
+- [Odin](https://odin-lang.org/)
+- [Roland](https://github.com/DenialAdams/roland)
+- [Rust](https://www.rust-lang.org/)
+- [WebAssembly Text](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format)
+- [Zig](https://ziglang.org/)
+
+### contribution
+
+<Callout emoji="❤️">
+You can use any language that compiles to wasm, so if you like a language we are missing, consider making a language-idiomatic header/demo-project for your favorite language, and sending us a [PR](https://github.com/notnullgames/null0/pulls).
+</Callout>
+
+The plan is to have a complete template-project for any cart-language, so it's easy for people to get started with their preferred ecosystem.
+
+#### notes
+
+- Try to use built-ins or sensible things for the language, for example, in nim we use `echo` in assemblyscript we use `trace`, and at some point C will use `printf`
+- All resources (images, fonts, sounds, etc) are `8bit unsigned int` reference-counters, but feel free to wrap this however seems sensible for the language. Nim, for example, uses a overloaded `proc`s, so if you leave off the `destination` it assumes `0` (screen) and whenever you load something new, it will auto-increment the resource-counter, so the user doesn't have to manage it
+- we can add things to the host, if the language just cannot do something, but you should try to do everything in the cart-header to adapt the language to it's host. For example, assemblyscript uses WTF16 encoding for strings, so we translate those to/from UTF8 null-terminated ("C strings") before interacting with the host.
+

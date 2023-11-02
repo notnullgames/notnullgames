@@ -1,0 +1,134 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import Cart from '@/components/Cart.jsx'
+
+<Callout emoji="🕹">
+The idea with input is that all is a "button" and buttons can be up or down. <br/>
+All input is routed through a couple of functions, so you can respond to it.
+</Callout>
+
+See [here](https://docs.libretro.com/guides/input-and-controls/) for info on how RetroArch maps keys to the virtual gamepad.
+
+Here is an example, click to focus for input:
+
+<Cart cart='/input.null0' />
+
+Source: [input](https://github.com/notnullgames/null0/tree/main/src/carts/input)
+
+
+The null0 zip-file looks like this:
+```
+├── assets
+│ ├── a.png
+│ ├── b.png
+│ ├── bg.png
+│ ├── down.png
+│ ├── l1.png
+│ ├── left.png
+│ ├── r1.png
+│ ├── right.png
+│ ├── select.png
+│ ├── start.png
+│ ├── up.png
+│ ├── x.png
+│ └── y.png
+└── main.wasm
+```
+
+### Button
+
+This is an enum that represents the directional or button that was pressed/released.
+
+```ts
+BUTTON_B
+BUTTON_Y
+BUTTON_SELECT
+BUTTON_START
+BUTTON_UP
+BUTTON_DOWN
+BUTTON_LEFT
+BUTTON_RIGHT
+BUTTON_A
+BUTTON_X
+BUTTON_L
+BUTTON_R
+BUTTON_L2
+BUTTON_R2
+BUTTON_L3
+BUTTON_R3
+```
+
+
+### buttonDown()
+
+This is called whenever a button or directional is pressed on the virtual gamepad.
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc buttonDown(button: Button) {.null0.} =
+  # handle your input here
+  if button == BUTTON_A:
+    echo "A pressed!"
+```
+</Tab>
+
+<Tab>
+```ts
+export function buttonDown(button: Button) {
+  // handle your input here
+  if (button == BUTTON_A) {
+    trace("A pressed!")
+  }
+}
+```
+</Tab>
+
+<Tab>
+```c
+void buttonDown(Button button) {
+  // handle your input here
+  if (button == BUTTON_A) {
+    log("A pressed!");
+  }
+}
+```
+</Tab>
+</Tabs>
+
+
+### buttonUp()
+
+This is called whenever a button or directional is un-pressed on the virtual gamepad.
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc buttonUp(button: Button) {.null0.} =
+  # handle your input here
+  if button == BUTTON_A:
+    echo "A released!"
+```
+</Tab>
+
+<Tab>
+```ts
+export function buttonUp(button: Button) {
+  // handle your input here
+  if (button == BUTTON_A) {
+    trace("A released!")
+  }
+}
+```
+</Tab>
+
+<Tab>
+```c
+void buttonUp(Button button) {
+  // handle your input here
+  if (button == BUTTON_A) {
+    log("A released!");
+  }
+}
+```
+</Tab>
+</Tabs>

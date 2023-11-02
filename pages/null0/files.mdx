@@ -1,0 +1,28 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import Cart from '@/components/Cart.jsx'
+
+<Callout emoji="💾">
+The idea with files is that you can read anything in the cart (a zip file) and write to files that are overlayed. This means that you will not modify the cart, but the user will have the same files in the cart filesystem the next time they run your cart.
+</Callout>
+
+Here is an example:
+
+<Cart cart='/files.null0' />
+
+Source: [input](https://github.com/notnullgames/null0/tree/main/src/carts/files)
+
+It will increment a counter in the file, each time it's loaded.
+
+Filesystem functions are meant to just use WASI built-in stuff, so it should be the same syntax you would normally use in that language.
+
+<Tabs items={['Nim']}>
+<Tab>
+```nim
+# read a file into a string
+var contents = readFile("file.txt")
+
+# write a string to a file
+writeFile("file.txt", contents)
+```
+</Tab>
+</Tabs>

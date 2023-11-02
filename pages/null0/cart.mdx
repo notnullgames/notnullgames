@@ -1,0 +1,266 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import Cart from '@/components/Cart.jsx'
+
+<Callout emoji="👾">
+Games are called *carts* like *cartridges* for old console systems.
+</Callout>
+
+A cart is made up of a few callbacks. You don't have to implement them all, but whatever you do implement will be called by the host. It's just a zip file, with `main.wasm` in the root.
+
+Here is one, now:
+
+<Cart cart='/flappybird.null0' />
+
+Source: [flappybird](https://github.com/notnullgames/null0/tree/main/src/carts/flappybird)
+
+## all together
+
+We'll get to more detail in a bit, but here is a quick lil example:
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+# This scope is shared between functions. It's an image. All asset-pointers are uint8.
+var logo:uint8
+
+# called when your cart loads
+proc load() {.null0.} =
+  # put logo.png file, in your cart, in assets/
+  logo = load_image("assets/logo.png")
+
+# called on every frame
+proc update(time:uint) {.null0.} =
+  # clear the screen
+  clear_background(BLACK)
+
+  # draw the logo
+  draw_image(logo, 64, 47)
+
+# called when the cart is unloaded
+proc unload() {.null0.} =
+  echo "Ok, bye."
+```
+</Tab>
+
+<Tab>
+```ts
+// This scope is shared between functions. It's an image. All asset-pointers are u8.
+let logo:u8
+
+// called when your cart loads
+export function load () {
+  // put logo.png file, in your cart, in assets/
+  logo = load_image("assets/logo.png")
+}
+
+// called on every frame
+export function update (time:uint) {
+  // clear the screen
+  clear_background(BLACK)
+
+  // draw the logo
+  draw_image(logo, 64, 47)
+}
+
+// called when the cart is unloaded
+export function unload () {
+  trace("Ok, bye.")
+}
+```
+</Tab>
+
+<Tab>
+```c
+#include "null0.h"
+
+// This scope is shared between functions. It's an image. All asset-pointers are unsigned char.
+unsigned char logo;
+
+// called when your cart loads
+void load () {
+  // put logo.png file, in your cart, in assets/
+  logo = load_image("assets/logo.png");
+}
+
+// called on every frame
+void update (unsigned int time) {
+  // clear the screen
+  clear_background(BLACK);
+
+  // draw the logo
+  draw_image(logo, 64, 47);
+}
+
+// called when the cart is unloaded
+void unload () {
+  log("Ok, bye.");
+}
+```
+</Tab>
+</Tabs>
+
+You can find more examples [here](https://github.com/notnullgames/null0/tree/main/src/carts).
+
+## lifecycle
+
+These functions get called at different times in the life of your cart.
+
+### load()
+
+This function will kick things off. It's called once when the cart first loads, and in most languages, you can put stuff in the top-level of your game, instead.
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc load() {.null0.} =
+  # do you setup stuff here
+  discard
+```
+</Tab>
+
+<Tab>
+```ts
+export function load() {
+  // do your setup stuff here
+}
+```
+</Tab>
+
+<Tab>
+```c
+void load() {
+  // do your setup stuff here
+}
+```
+</Tab>
+</Tabs>
+
+
+### update()
+
+This function is called on every frame. Use it to update things. It receives the elapsed time in milliseconds, as an int. You can use this to animate things.
+
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc update(time:uint) {.null0.} =
+  # do your update stuff here
+  discard
+```
+</Tab>
+
+<Tab>
+```ts
+export function update() {
+  // do your update stuff here
+}
+```
+</Tab>
+
+<Tab>
+```c
+void update() {
+  // do your update stuff here
+}
+```
+</Tab>
+</Tabs>
+
+
+### unload()
+
+This function is called when the cart exits.
+
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc unload() {.null0.} =
+  # do your shutdown stuff here
+  discard
+```
+</Tab>
+
+<Tab>
+```ts
+export function unload() {
+  // do your shutdown stuff here
+}
+```
+</Tab>
+
+<Tab>
+```c
+void unload() {
+  // do your shutdown stuff here
+}
+```
+</Tab>
+</Tabs>
+
+## input
+
+All input is routed through these, so you can respond to it. Learn more [here](input).
+
+### buttonDown()
+
+This is called whenever a button or directional is pressed on the virtual gamepad.
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc buttonDown(button: Button) {.null0.} =
+  # handle your input here
+  discard
+```
+</Tab>
+
+<Tab>
+```ts
+export function buttonDown(button: Button) {
+  // handle your input here
+}
+```
+</Tab>
+
+<Tab>
+```c
+void buttonDown(Button button) {
+  // handle your input here
+}
+```
+</Tab>
+</Tabs>
+
+
+### buttonUp()
+
+This is called whenever a button or directional is un-pressed on the virtual gamepad.
+
+<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
+<Tab>
+```nim
+proc buttonUp(button: Button) {.null0.} =
+  # handle your input here
+  discard
+```
+</Tab>
+
+<Tab>
+```ts
+export function buttonUp(button: Button) {
+  // handle your input here
+}
+```
+</Tab>
+
+<Tab>
+```c
+void buttonUp(Button button) {
+  // handle your input here
+}
+```
+</Tab>
+</Tabs>
+

@@ -1,0 +1,52 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+<Callout>
+Nim is a fun language that compiles to C (or C++, or a few more.) It feels a little like python or lua.
+</Callout>
+
+You can read more [on the nim website](https://nim-lang.org/). You will need [nim installed](https://nim-lang.org/install.html) and [emscripten](https://emscripten.org/docs/getting_started/downloads.html) to use it.
+
+Here is some example code:
+
+#### src/main.nim
+```nim
+proc load() {.null0.} =
+  echo "Hello from justlog."
+
+proc unload() {.null0.} =
+  echo "Ok, bye."
+```
+
+### easy build
+
+If you use [our template](https://github.com/notnullgames/null0-cart-nim) or the [CLI quick-starter](../quick), it's a bit easier to get started quickly:
+
+```
+nimble cart
+```
+
+### manual build
+
+For null0, you need to import [the header](https://github.com/notnullgames/null0/blob/main/src/carts/null0.nim), and you will get the `{.null0.}` pragma and some null0 functions and constants.
+
+To compile to the correct wasm, you can use [this config](https://github.com/notnullgames/null0/blob/main/src/carts/config.nims), which sets some flags and imports [the header](https://github.com/notnullgames/null0/blob/main/src/carts/null0.nim).
+
+```
+nimble install https://github.com/notnullgames/null0-nim
+cd src
+nim c main.nim
+```
+
+This will create `main.wasm`, so now you can create a zip file:
+
+```
+zip ../mycart.null0 -r main.wasm assets/
+```
+
+### docker
+
+If you have docker installed, you can use it to build, without needing to install anything else (no nim, etc.)
+
+```
+docker run -it -v $(pwd):/cart konsumer/null0:nim nimble cart
+```

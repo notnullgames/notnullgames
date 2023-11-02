@@ -1,0 +1,29 @@
+<script type="importmap">
+{
+  "imports": {
+    "@zip.js/zip.js": "https://deno.land/x/zipjs/index.js",
+    "sam-js": "https://www.unpkg.com/sam-js@0.2.0/dist/samjs.esm.js"
+  }
+}
+</script>
+<style>
+ html, body {
+  width:  100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+body {
+  background: rgb(20, 20, 20);
+  color: #fff;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+</style>
+
+<script src="./null0-game-component.js" type="module"></script>
+<null0-game id="cart" cart="flappybird.null0" fps fill logOk />
