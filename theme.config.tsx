@@ -7,7 +7,11 @@ export default {
   project: {
     link: 'https://github.com/notnullgames/'
   },
+  chat: {
+    link: 'https://discord.gg/wcR8JkWKJx'
+  },
   docsRepositoryBase: 'https://github.com/notnullgames/notnullgames.github.io/blob/main/',
+  
   footer: {
     text: `${new Date().getFullYear()} © notnullgames`
   },
