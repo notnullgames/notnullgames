@@ -7,6 +7,17 @@ It's fun to use, and a great way to learn new programming languages.
 
 The basic idea is that you make your game in whatever language you like, and put that with your assets in a zip-file, and you can run it in libretro, or the standalone runtime, or on the web.
 
+### concepts
+
+#### types
+
+- `u32`, `u16`, `u8` - "unsigned integer" each is a specific bit-size (8 bits in a byte.) These are integers that are only positive or 0.
+- `i32`, `i16`, `i8` - "signed integer" each is a specific bit-size (8 bits in a byte.) These are integers that are positive/negative or 0.
+- `string` - this is `char*` in C. It's a standard "C-string", which is a pointer to bytes that are UTF8/null-terminated. Effort will be made to wrap them in cart-languages, to make them make more sense.
+- `struct` - this is some bytes that describe a kind of object, with fields. There are a few things that return these, and they are the same as in C. Effort will be made to wrap them in cart-languages, to make them make more sense.
+- `Image` - this is a reference to a loaded image-object in the host, and is a `u32`.
+- `Font` - this is a reference to a loaded font-object in the host, and is a `u32`.
+- `Sound` - this is a reference to a loaded sound-object in the host, and is a `u32`.
 
 ### supported
 
