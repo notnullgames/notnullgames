@@ -134,3 +134,53 @@ void buttonUp(Button button) {
 ```
 </Tab>
 </Tabs>
+
+### no callbacks
+
+Using the above callbacks, you can quickly get "mapped" input, which means that the up-arrow on the keyboard is the same as up on gamepad 1 or 2. If you want finer-grained control of things, you can use direct lookups of state for mouse/gamepad/keyboard.
+
+- You can drill into specific inputs (if you care about keyboard vs gamepad, for example)
+- You can use `pressed`/`released` functions to trigger actions, and it will debounce and only fire once.
+- You can use `down`/`up` to get the current state of it
+
+```nim
+# has the key been pressed? (tracks unpress/read correctly)
+proc key_pressed(key:Key): boolean
+
+# is the key currently down?
+proc key_down(key:Key): boolean
+
+# is the key released? (tracks press/read correctly)
+proc key_released(key:Key): boolean
+
+# is the key currently up?
+proc key_up(key:Key): boolean
+
+# has the button been pressed? (tracks unpress/read correctly)
+proc gamepad_button_pressed(gamepad:i32, key:GamepadButton): boolean
+
+# is the button currently down?
+proc gamepad_button_down(i32 gamepad, GamepadButton key): boolean
+
+# is the button released? (tracks press/read correctly)
+proc gamepad_button_released(i32 gamepad, GamepadButton key): boolean
+
+# is the button currently up?
+proc gamepad_button_up(i32 gamepad, GamepadButton key): boolean
+
+# current position of mouse
+proc mouse_position(): Vector*
+
+# has the button been pressed? (tracks unpress/read correctly)
+proc mouse_button_pressed(MouseButton button): boolean
+
+# is the button currently down?
+proc mouse_button_down(MouseButton button): boolean
+
+# is the button released? (tracks press/read correctly)
+proc mouse_button_released(MouseButton button): boolean
+
+# is the button currently up?
+proc mouse_button_up(MouseButton button): boolean
+```
+
