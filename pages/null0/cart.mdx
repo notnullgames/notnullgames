@@ -44,8 +44,8 @@ proc unload() {.null0.} =
 
 <Tab>
 ```ts
-// This scope is shared between functions. It's an image. All asset-pointers are u8.
-let logo:u8
+// This scope is shared between functions. It's an image. All asset-pointers are u32.
+let logo:u32
 
 // called when your cart loads
 export function load () {
@@ -73,8 +73,8 @@ export function unload () {
 ```c
 #include "null0.h"
 
-// This scope is shared between functions. It's an image. All asset-pointers are unsigned char.
-unsigned char logo;
+// This scope is shared between functions. It's an image. All asset-pointers are u32.
+u32 logo;
 
 // called when your cart loads
 NULL0_EXPORT("load")
