@@ -25,11 +25,11 @@ Here is the nim signatures for now:
 
 ```nim
 # sound-source: load a sound file (ogg, wav, etc) from file inside the cart
-proc load_sound(destination: uint32, filename: cstring)
+proc sound_load(destination: uint32, filename: string): uint32
 
 # sound-source: create a text-to-speech talker
-proc load_speech(destination: uint32, text: cstring)
+proc speech_load(destination: uint32, text: string): uint32
 
 # play a sound-source
-proc play_sound(id: uint32)
+proc sound_play(id: uint32)
 ```
