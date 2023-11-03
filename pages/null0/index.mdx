@@ -37,10 +37,7 @@ These are planned:
 - `i32`, `i16`, `i8` - "signed integer" each is a specific bit-size (8 bits in a byte.) These are integers that are positive/negative or 0.
 - `string` - this is `char*` in C. It's a standard "C-string", which is a pointer to bytes that are UTF8/null-terminated. Effort will be made to wrap them in cart-languages, to make them make more sense.
 - `struct` - this is some bytes that describe a kind of object, with fields. There are a few things that return these, and they are the same as in C. Effort will be made to wrap them in cart-languages, to make them make more sense.
-- `Image` - this is a reference to a loaded image-object in the host, and is a `u32`.
-- `Font` - this is a reference to a loaded font-object in the host, and is a `u32`.
-- `Sound` - this is a reference to a loaded sound-object in the host, and is a `u32`.
-
+- All resources (images, fonts, sounds, etc) are `u32` reference-counters.
 
 ### contribution
 
@@ -52,7 +49,7 @@ The plan is to have a complete template-project for any cart-language, so it's e
 
 #### notes
 
-- Try to use built-ins or sensible things for the language, for example, in nim we use `echo` in assemblyscript we use `trace`, and at some point C will use `printf`
-- All resources (images, fonts, sounds, etc) are `8bit unsigned int` reference-counters, but feel free to wrap this however seems sensible for the language. Nim, for example, uses a overloaded `proc`s, so if you leave off the `destination` it assumes `0` (screen) and whenever you load something new, it will auto-increment the resource-counter, so the user doesn't have to manage it
+- With many things, there may be a more idiomatic way to do it, in that language (like in C/nim, reading/writing files) but we currently favor a matching API (across languages) over language-idiomatic. Ths may chnage in the future, once I get good WASI bindings setup. We should try to use built-ins or sensible things for the language, for example, in nim we could use `echo` and `printf` in C.
+- Feel free to wrap values however seems sensible for the language. Nim, for example, uses a overloaded `proc`s, so if you leave off the `destination` for image-functions (drawing, etc) it assumes `0` (screen)
 - we can add things to the host, if the language just cannot do something, but you should try to do everything in the cart-header to adapt the language to it's host. For example, assemblyscript uses WTF16 encoding for strings, so we translate those to/from UTF8 null-terminated ("C strings") before interacting with the host.
 
