@@ -20,8 +20,8 @@ We'll get to more detail in a bit, but here is a quick lil example:
 <Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
 <Tab>
 ```nim
-# This scope is shared between functions. It's an image. All asset-pointers are uint8.
-var logo:uint8
+# This scope is shared between functions. It's an image. All asset-pointers are uint32.
+var logo:uint32
 
 # called when your cart loads
 proc load() {.null0.} =
@@ -77,12 +77,14 @@ export function unload () {
 unsigned char logo;
 
 // called when your cart loads
+NULL0_EXPORT("load")
 void load () {
   // put logo.png file, in your cart, in assets/
   logo = load_image("assets/logo.png");
 }
 
 // called on every frame
+NULL0_EXPORT("update")
 void update (unsigned int time) {
   // clear the screen
   clear_background(BLACK);
@@ -92,6 +94,7 @@ void update (unsigned int time) {
 }
 
 // called when the cart is unloaded
+NULL0_EXPORT("unload")
 void unload () {
   log("Ok, bye.");
 }
@@ -128,10 +131,20 @@ export function load() {
 
 <Tab>
 ```c
+NULL0_EXPORT("load")
 void load() {
   // do your setup stuff here
 }
 ```
+You can also use `main()`:
+
+```c
+int main() {
+  // do your setup stuff here
+  return 0;
+}
+```
+
 </Tab>
 </Tabs>
 
@@ -160,6 +173,7 @@ export function update() {
 
 <Tab>
 ```c
+NULL0_EXPORT("update")
 void update() {
   // do your update stuff here
 }
@@ -192,6 +206,7 @@ export function unload() {
 
 <Tab>
 ```c
+NULL0_EXPORT("unload")
 void unload() {
   // do your shutdown stuff here
 }
@@ -226,6 +241,7 @@ export function buttonDown(button: Button) {
 
 <Tab>
 ```c
+NULL0_EXPORT("buttonDown")
 void buttonDown(Button button) {
   // handle your input here
 }
@@ -257,6 +273,7 @@ export function buttonUp(button: Button) {
 
 <Tab>
 ```c
+NULL0_EXPORT("buttonUp")
 void buttonUp(Button button) {
   // handle your input here
 }

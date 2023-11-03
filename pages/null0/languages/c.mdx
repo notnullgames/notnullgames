@@ -1,0 +1,73 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+<Callout emoji='⚡'>
+C is a powerful and straight-forward language, and using it in null0 is highly recommended.
+</Callout>
+
+[C](https://en.wikipedia.org/wiki/C_(programming_language)) may seem a bit complicated, at first, but it's really simple, since it has nothing fancy, built-in. A lot of the annoying things (for me) about C, like dependencies and build-systems is basically done for you, so it's easy & fast to get started, and it ends up being about the same complexity as any other supported language, and your code will look very similar. To use it, you will need a C-compiler that can target wasm (I recommend clang/llvm).
+
+Here is some example code:
+
+#### src/main.c
+```c
+#include <null0.h>
+
+int main() {
+  trace("Hello from justlog.");
+  return 0;
+}
+```
+
+You can export any [lifecycle functions](/null0/cart) like this:
+
+```c
+#include <null0.h>
+
+// this is same as main()
+NULL0_EXPORT("load")
+void load() {
+}
+
+NULL0_EXPORT("buttonDown")
+void buttonDown(GamepadButton button) {
+}
+
+NULL0_EXPORT("buttonUp")
+void buttonUp(GamepadButton button) {
+}
+
+NULL0_EXPORT("update")
+void update() {
+}
+```
+
+In all of our targets, we have a named-export system (see [load()](/null0/cart#load)) but in C, we also let you use the standard `int main()`.
+
+
+### easy build
+
+If you use [our template](https://github.com/notnullgames/null0-cart-c) or the [CLI quick-starter](../quick), it's a bit easier to get started quickly:
+
+```
+make
+```
+
+### manual build
+
+For null0, you need to import [the header](https://github.com/notnullgames/null0/blob/main/src/carts/null0.h), and you will get the `NULL0_EXPORT` macro and some null0 functions and constants.
+
+See [this Makefile](https://github.com/notnullgames/null0-cart-c/Makefile) to get an idea of how to set it up.
+
+Basically, create `main.wasm`, however you want to, then you can create a zip file:
+
+```
+zip mycart.null0 -r main.wasm assets/
+```
+
+### docker
+
+If you have docker installed, you can use it to build, without needing to install anything else (no C/wasm toolchain, etc.)
+
+```
+docker run -it -v $(pwd):/cart konsumer/null0:nim make cart
+```

@@ -31,43 +31,43 @@ Here is the nim signatures for now:
 
 ```nim
 # load an image from file inside the cart
-proc load_image(destination: uint8, filename: cstring)
+proc load_image(destination: uint32, filename: cstring)
 
 # load a BM font from file inside the cart (image with seperator color)
-proc load_font_bm(destination: uint8, filename: cstring, chars: cstring)
+proc load_font_bm(destination: uint32, filename: cstring, chars: cstring)
 
 # load a TTY font from file inside the cart (fixed-width image)
-proc load_font_tty(destination: uint8, filename: cstring, glyphWidth: cint, glyphHeight: cint, chars: cstring)
+proc load_font_tty(destination: uint32, filename: cstring, glyphWidth: cint, glyphHeight: cint, chars: cstring)
 
 # load a TTF font from file inside the cart
-proc load_font_ttf(destination: uint8, filename: cstring, fontSize: cint, fontColor: Color)
+proc load_font_ttf(destination: uint32, filename: cstring, fontSize: cint, fontColor: Color)
 
 # clear an image, use 0 for screen
-proc clear_background(destination: uint8, color: Color)
+proc clear_background(destination: uint32, color: Color)
 
 # draw a circle on an image, use 0 for screen
-proc draw_circle(destination: uint8, centerX: int, centerY: int, radius:int, color: Color)
+proc draw_circle(destination: uint32, centerX: int, centerY: int, radius:int, color: Color)
 
 # draw a pixel on an image, use 0 for screen
-proc draw_pixel(destination: uint8, x: cint, y: cint, color: Color)
+proc draw_pixel(destination: uint32, x: cint, y: cint, color: Color)
 
 # draw a line on an image, use 0 for screen
-proc draw_line(destination: uint8, startPosX: cint, startPosY: cint, endPosX: cint, endPosY: cint, color: Color)
+proc draw_line(destination: uint32, startPosX: cint, startPosY: cint, endPosX: cint, endPosY: cint, color: Color)
 
 # draw a rectangle on an image, use 0 for screen
-proc draw_rectangle(destination: uint8, posX: cint, posY: cint, width: cint, height: cint, color: Color)
+proc draw_rectangle(destination: uint32, posX: cint, posY: cint, width: cint, height: cint, color: Color)
 
 # draw an image on an image, use 0 for screen
-proc draw_image(destination: uint8, src: uint8, posX: cint, posY: cint)
+proc draw_image(destination: uint32, src: uint32, posX: cint, posY: cint)
 
 # draw text on an image, use 0 for screen
-proc draw_text(destination: uint8, font: uint8, text: cstring, posX: cint, posY: cint)
+proc draw_text(destination: uint32, font: uint32, text: cstring, posX: cint, posY: cint)
 
 # fill image with a vertical gradient, use 0 for screen
-proc gradient_vertical(destination: uint8, width: cint, height: cint, top: Color, bottom: Color)
+proc gradient_vertical(destination: uint32, width: cint, height: cint, top: Color, bottom: Color)
 
 # fill image with a horizontal gradient, use 0 for screen
-proc gradient_horizontal(destination: uint8, width: cint, height: cint, left: Color, right: Color)
+proc gradient_horizontal(destination: uint32, width: cint, height: cint, left: Color, right: Color)
 ```
 
 For any of these, if you leave off `destination`, it will default to `0` (screen.)
