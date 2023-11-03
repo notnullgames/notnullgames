@@ -77,10 +77,10 @@ export function unload () {
 u32 logo;
 
 // called when your cart loads
-NULL0_EXPORT("load")
-void load () {
+int main () {
   // put logo.png file, in your cart, in assets/
   logo = load_image("assets/logo.png");
+  return 0;
 }
 
 // called on every frame
@@ -136,7 +136,7 @@ void load() {
   // do your setup stuff here
 }
 ```
-You can also use `main()`:
+You can also use `main()`, which makes it look more "regular" and doesn;t require special build-flags to leave out main:
 
 ```c
 int main() {

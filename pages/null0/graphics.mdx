@@ -30,44 +30,78 @@ Our docs aren't really ready, but we're working on it.
 Here is the nim signatures for now:
 
 ```nim
+# create a new image
+proc create_image(width: uint32, height:uint32): uint32
+
 # load an image from file inside the cart
-proc load_image(destination: uint32, filename: cstring)
+proc load_image(filename: string): uint32
 
 # load a BM font from file inside the cart (image with seperator color)
-proc load_font_bm(destination: uint32, filename: cstring, chars: cstring)
+proc load_font_bm(filename: string, chars: string): uint32
 
 # load a TTY font from file inside the cart (fixed-width image)
-proc load_font_tty(destination: uint32, filename: cstring, glyphWidth: cint, glyphHeight: cint, chars: cstring)
+proc load_font_tty(filename: string, glyphWidth: int, glyphHeight: int, chars: string): uint32
 
 # load a TTF font from file inside the cart
-proc load_font_ttf(destination: uint32, filename: cstring, fontSize: cint, fontColor: Color)
+proc load_font_ttf(filename: string, fontSize: int, fontColor: Color): uint32
 
-# clear an image, use 0 for screen
-proc clear_background(destination: uint32, color: Color)
+# clear screen
+proc clear_background(color: Color)
 
-# draw a circle on an image, use 0 for screen
-proc draw_circle(destination: uint32, centerX: int, centerY: int, radius:int, color: Color)
+# draw a circle on screen
+proc draw_circle(centerX: int, centerY: int, radius:int, color: Color)
 
-# draw a pixel on an image, use 0 for screen
-proc draw_pixel(destination: uint32, x: cint, y: cint, color: Color)
+# draw a pixel on screen
+proc draw_pixel(x: int, y: int, color: Color)
 
-# draw a line on an image, use 0 for screen
-proc draw_line(destination: uint32, startPosX: cint, startPosY: cint, endPosX: cint, endPosY: cint, color: Color)
+# draw a line on screen
+proc draw_line(startPosX: int, startPosY: int, endPosX: int, endPosY: int, color: Color)
 
-# draw a rectangle on an image, use 0 for screen
-proc draw_rectangle(destination: uint32, posX: cint, posY: cint, width: cint, height: cint, color: Color)
+# draw a rectangle on screen
+proc draw_rectangle(posX: int, posY: int, width: int, height: int, color: Color)
 
-# draw an image on an image, use 0 for screen
-proc draw_image(destination: uint32, src: uint32, posX: cint, posY: cint)
+# draw an image on screen
+proc draw_image(src: uint32, posX: int, posY: int)
 
-# draw text on an image, use 0 for screen
-proc draw_text(destination: uint32, font: uint32, text: cstring, posX: cint, posY: cint)
+# draw text on screen
+proc draw_text(font: uint32, text: string, posX: int, posY: int)
 
-# fill image with a vertical gradient, use 0 for screen
-proc gradient_vertical(destination: uint32, width: cint, height: cint, top: Color, bottom: Color)
+# fill screen with a vertical gradient
+proc gradient_vertical(width: int, height: int, top: Color, bottom: Color)
 
-# fill image with a horizontal gradient, use 0 for screen
-proc gradient_horizontal(destination: uint32, width: cint, height: cint, left: Color, right: Color)
+# fill screen with a horizontal gradient
+proc gradient_horizontal(width: int, height: int, left: Color, right: Color)
 ```
 
-For any of these, if you leave off `destination` in nim, it will default to `0` (screen.)
+In languages that can use overloads, like nim, you can also set first param to `destination` for an image, and 0 is "screen" in all things that use an image. This means that you can copy a part of the screen to an image, or draw on an image, instead of the screen.
+
+In C, and other languages that do not do overloads, you can add `_on_image` to the end of the name, like this:
+
+```nim
+# clear image
+proc clear_background_on_image(destination: uint32, color: Color)
+
+# draw a circle on image
+proc draw_circle_on_image(destination: uint32, centerX: int, centerY: int, radius:int, color: Color)
+
+# draw a pixel on image
+proc draw_pixel_on_image(destination: uint32, x: int, y: int, color: Color)
+
+# draw a line on image
+proc draw_line_on_image(destination: uint32, startPosX: int, startPosY: int, endPosX: int, endPosY: int, color: Color)
+
+# draw a rectangle on image
+proc draw_rectangle_on_image(destination: uint32, posX: int, posY: int, width: int, height: int, color: Color)
+
+# draw an image on image
+proc draw_image_on_image(destination: uint32, src: uint32, posX: int, posY: int)
+
+# draw text on image
+proc draw_text_on_image(destination: uint32, font: uint32, text: string, posX: int, posY: int)
+
+# fill image with a vertical gradient
+proc gradient_vertical_on_image(destination: uint32, width: int, height: int, top: Color, bottom: Color)
+
+# fill image with a horizontal gradient
+proc gradient_horizontal_on_image(destination: uint32, width: int, height: int, left: Color, right: Color)
+```
