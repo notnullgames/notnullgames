@@ -1,6 +1,4 @@
 import React from 'react'
-import { DocsThemeConfig, Callout } from 'nextra-theme-docs'
-import Logo from '@/components/Logo.jsx'
 
 export default {
   logo: <><img src="/logo.png" height="50" width="50" style={{marginRight: 10}}/> notnullgames</>,

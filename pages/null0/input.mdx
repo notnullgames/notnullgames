@@ -3,7 +3,7 @@ import Cart from '@/components/Cart.jsx'
 
 <Callout emoji="🕹">
 The idea with input is that all is a "button" and buttons can be up or down. <br/>
-All input is routed through a couple of functions, so you can respond to it.
+All input is routed through a couple of callback-functions, so you can respond to it, easily, or drill into specific input.
 </Callout>
 
 See [here](https://docs.libretro.com/guides/input-and-controls/) for info on how RetroArch maps keys to the virtual gamepad.
@@ -34,29 +34,29 @@ The null0 zip-file looks like this:
 └── main.wasm
 ```
 
-### Button
+### GamepadButton
 
 This is an enum that represents the directional or button that was pressed/released.
 
 ```ts
-BUTTON_B
-BUTTON_Y
-BUTTON_SELECT
-BUTTON_START
-BUTTON_UP
-BUTTON_DOWN
-BUTTON_LEFT
-BUTTON_RIGHT
-BUTTON_A
-BUTTON_X
-BUTTON_L
-BUTTON_R
-BUTTON_L2
-BUTTON_R2
-BUTTON_L3
-BUTTON_R3
+GAMEPAD_BUTTON_UP,              // Gamepad left DPAD up button
+GAMEPAD_BUTTON_RIGHT,           // Gamepad left DPAD right button
+GAMEPAD_BUTTON_DOWN,            // Gamepad left DPAD down button
+GAMEPAD_BUTTON_LEFT,            // Gamepad left DPAD left button
+GAMEPAD_BUTTON_Y,               // Gamepad right button up (i.e. PS3: Triangle, Xbox: Y)
+GAMEPAD_BUTTON_B,               // Gamepad right button right (i.e. PS3: Square, Xbox: X)
+GAMEPAD_BUTTON_A,               // Gamepad right button down (i.e. PS3: Cross, Xbox: A)
+GAMEPAD_BUTTON_X,               // Gamepad right button left (i.e. PS3: Circle, Xbox: B)
+GAMEPAD_BUTTON_LEFT_SHOULDER,   // Gamepad top/back trigger left (first), it could be a trailing button
+GAMEPAD_BUTTON_LEFT_TRIGGER,    // Gamepad top/back trigger left (second), it could be a trailing button
+GAMEPAD_BUTTON_RIGHT_SHOULDER,  // Gamepad top/back trigger right (one), it could be a trailing button
+GAMEPAD_BUTTON_RIGHT_TRIGGER,   // Gamepad top/back trigger right (second), it could be a trailing button
+GAMEPAD_BUTTON_SELECT,          // Gamepad center buttons, left one (i.e. PS3: Select)
+GAMEPAD_BUTTON_MENU,            // Gamepad center buttons, middle one (i.e. PS3: PS, Xbox: XBOX)
+GAMEPAD_BUTTON_START,           // Gamepad center buttons, right one (i.e. PS3: Start)
+GAMEPAD_BUTTON_LEFT_THUMB,      // Gamepad joystick pressed button left
+GAMEPAD_BUTTON_RIGHT_THUMB,     // Gamepad joystick pressed button right
 ```
-
 
 ### buttonDown()
 
@@ -65,18 +65,18 @@ This is called whenever a button or directional is pressed on the virtual gamepa
 <Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
 <Tab>
 ```nim
-proc buttonDown(button: Button) {.null0.} =
+proc buttonDown(button: GamepadButton) {.null0.} =
   # handle your input here
-  if button == BUTTON_A:
+  if button == GAMEPAD_BUTTON_A:
     echo "A pressed!"
 ```
 </Tab>
 
 <Tab>
 ```ts
-export function buttonDown(button: Button) {
+export function buttonDown(button: GamepadButton) {
   // handle your input here
-  if (button == BUTTON_A) {
+  if (button == GAMEPAD_BUTTON_A) {
     trace("A pressed!")
   }
 }
@@ -86,9 +86,9 @@ export function buttonDown(button: Button) {
 <Tab>
 ```c
 NULL0_EXPORT("buttonDown")
-void buttonDown(Button button) {
+void buttonDown(GamepadButton button) {
   // handle your input here
-  if (button == BUTTON_A) {
+  if (button == GAMEPAD_BUTTON_A) {
     log("A pressed!");
   }
 }
@@ -104,18 +104,18 @@ This is called whenever a button or directional is un-pressed on the virtual gam
 <Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
 <Tab>
 ```nim
-proc buttonUp(button: Button) {.null0.} =
+proc buttonUp(button: GamepadButton) {.null0.} =
   # handle your input here
-  if button == BUTTON_A:
+  if button == GAMEPAD_BUTTON_A:
     echo "A released!"
 ```
 </Tab>
 
 <Tab>
 ```ts
-export function buttonUp(button: Button) {
+export function buttonUp(button: GamepadButton) {
   // handle your input here
-  if (button == BUTTON_A) {
+  if (button == GAMEPAD_BUTTON_A) {
     trace("A released!")
   }
 }
@@ -125,9 +125,9 @@ export function buttonUp(button: Button) {
 <Tab>
 ```c
 NULL0_EXPORT("buttonUp")
-void buttonUp(Button button) {
+void buttonUp(GamepadButton button) {
   // handle your input here
-  if (button == BUTTON_A) {
+  if (button == GAMEPAD_BUTTON_A) {
     log("A released!");
   }
 }
@@ -140,6 +140,7 @@ void buttonUp(Button button) {
 Using the above callbacks, you can quickly get "mapped" input, which means that the up-arrow on the keyboard is the same as up on gamepad 1 or 2. If you want finer-grained control of things, you can use direct lookups of state for mouse/gamepad/keyboard.
 
 - You can drill into specific inputs (if you care about keyboard vs gamepad, for example)
+- You can see [this header](https://github.com/notnullgames/null0-cart-c/blob/main/src/null0.h) for all the input-enums.
 - You can use `pressed`/`released` functions to trigger actions, and it will debounce and only fire once.
 - You can use `down`/`up` to get the current state of it
 

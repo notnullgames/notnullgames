@@ -60,6 +60,12 @@ proc draw_line(startPosX: int, startPosY: int, endPosX: int, endPosY: int, color
 # draw a rectangle on screen
 proc draw_rectangle(posX: int, posY: int, width: int, height: int, color: Color)
 
+# draw a round-rectangle on screen
+proc draw_round_rectangle(posX: int, posY: int, width: int, height: int, radius: int, color: Color)
+
+# draw an elipse on screen
+proc draw_ellipse(posX: int, posY: int, width: int, height: int, radiusX:int, radiusY:int, color: Color)
+
 # draw an image on screen
 proc draw_image(src: uint32, posX: int, posY: int)
 
@@ -93,6 +99,12 @@ proc draw_line_on_image(destination: uint32, startPosX: int, startPosY: int, end
 # draw a rectangle on image
 proc draw_rectangle_on_image(destination: uint32, posX: int, posY: int, width: int, height: int, color: Color)
 
+# draw a round-rectangle on image
+proc draw_round_rectangle_on_image(destination: uint32, posX: int, posY: int, width: int, height: int, radius: int, color: Color)
+
+# draw an elipse on image
+proc draw_ellipse_on_image(destination: uint32, posX: int, posY: int, width: int, height: int, radiusX:int, radiusY:int, color: Color)
+
 # draw an image on image
 proc draw_image_on_image(destination: uint32, src: uint32, posX: int, posY: int)
 
@@ -104,4 +116,15 @@ proc gradient_vertical_on_image(destination: uint32, width: int, height: int, to
 
 # fill image with a horizontal gradient
 proc gradient_horizontal_on_image(destination: uint32, width: int, height: int, left: Color, right: Color)
+```
+
+You can also add `_outline` to all drawing-functions, to draw a 1-pixel outline instead of filling it.
+
+
+```nim
+# draw outlined circle on screen
+proc draw_circle_outline(destination: uint32, centerX: int, centerY: int, radius:int, color: Color)
+
+# draw outlined circle on image
+proc draw_circle_outline_on_image(destination: uint32, centerX: int, centerY: int, radius:int, color: Color)
 ```
