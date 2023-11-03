@@ -71,7 +71,7 @@ export class Null0GameComponent extends HTMLElement {
       }
       </style>
       <div id="container">
-        <img src="https://notnullgames.github.io/mute.png" id="mute" />
+        <img src="https://notnullgames.vercel.app/mute.png" id="mute" />
         <canvas tabindex="1" width="320" height="240" id="canvas"></canvas>
       </div>
     `
