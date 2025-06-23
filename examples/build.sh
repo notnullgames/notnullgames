@@ -35,7 +35,7 @@ BUILDJSCART() {
   mkdir -p "/tmp/${name}"
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
-  cp  "${source_dir}/../main.wasm" .
+  cp  "${SCRIPT_DIR}/../public/carts/main.wasm" .
   zip -rq "${SCRIPT_DIR}/../public/carts/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
 }
 

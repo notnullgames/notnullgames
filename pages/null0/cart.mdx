@@ -4,6 +4,7 @@ title: Anatomy of a Cart
 ---
 
 import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='👾'>Games are called *carts* like *cartridges* for old console systems.</Callout>
 
@@ -11,7 +12,7 @@ A cart is made up of a few callbacks. You don't have to implement them all, but 
 
 Here is one, now:
 
-<null0-cart src='/carts/js-flappy.null0' />
+<Null0Cart src='/carts/js-flappy.null0' />
 [source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/flappy/)
 
 All supported languages should have very simple/similar syntax.
@@ -49,7 +50,7 @@ Button input is mapped using [libretro keys](https://docs.libretro.com/guides/in
 
 Here is an input-demo, that shows how the keys work:
 
-<null0-cart src='/carts/js-input.null0' />
+<Null0Cart src='/carts/js-input.null0' />
 [source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/input/)
 
 Here are the callbacks you can define:

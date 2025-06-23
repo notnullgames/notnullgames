@@ -1,6 +1,5 @@
 import { ViteReactSSG } from 'vite-react-ssg'
 
-import './null0-cart.js'
 import './style.css'
 import Page from './Page'
 
