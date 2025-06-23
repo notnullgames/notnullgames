@@ -1,29 +1,30 @@
 // this is a web-component that shows a null0 cart
 
 import loadCart from './null0-wasm/null0.js'
+if (typeof dpcument !== 'undefined') {
+  class Null0Cart extends HTMLElement {
+    static get observedAttributes() {
+      return ['src']
+    }
 
-class Null0Cart extends HTMLElement {
-  static get observedAttributes() {
-    return ['src']
-  }
+    constructor() {
+      super()
+      const shadow = this.attachShadow({ mode: 'open' })
+      this.canvas = document.createElement('canvas')
+      shadow.appendChild(this.canvas)
+    }
 
-  constructor() {
-    super()
-    const shadow = this.attachShadow({ mode: 'open' })
-    this.canvas = document.createElement('canvas')
-    shadow.appendChild(this.canvas)
-  }
+    connectedCallback() {}
+    disconnectedCallback() {}
 
-  connectedCallback() {}
-  disconnectedCallback() {}
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'src') {
-      loadCart(newValue, this.canvas).then((cart) => {
-        this.cart = cart
-      })
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name === 'src') {
+        loadCart(newValue, this.canvas).then((cart) => {
+          this.cart = cart
+        })
+      }
     }
   }
-}
 
-customElements.define('null0-cart', Null0Cart)
+  customElements.define('null0-cart', Null0Cart)
+}
