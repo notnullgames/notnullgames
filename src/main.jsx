@@ -1,4 +1,5 @@
 import { ViteReactSSG } from 'vite-react-ssg'
+import { createRoot } from 'react-dom/client'
 import './style.css'
 import Page from './Page'
 
@@ -44,12 +45,12 @@ const routes = pages.map(({ PageComponent, slug, ...info }) => {
   return route
 })
 
-export const createRoot = ViteReactSSG(
-  // react-router-dom data routes
-  { routes },
-  // function to have custom setups
-  ({ router, routes, isClient, initialState }) => {
-    // do something.
-  }
-)
-globalThis.createRoot = createRoot
+globalThis.createRoot =
+  ViteReactSSG(
+    // react-router-dom data routes
+    { routes },
+    // function to have custom setups
+    ({ router, routes, isClient, initialState }) => {
+      // do something.
+    }
+  ) || createRoot

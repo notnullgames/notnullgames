@@ -55,7 +55,7 @@ function MenuNav({ pages, nav, slug, prefix = '/' }) {
 export default function Page({ children, pages = [], meta, slug, nav }) {
   return (
     <>
-      <header className='navbar bg-base-300 shadow-sm flex flex-row justify-between p-4 fixed top-0 left-0'>
+      <header className='navbar bg-base-300 shadow-sm flex flex-row justify-between p-4 fixed top-0 left-0 z-10'>
         <a href='/' className='flex gap-2 items-center'>
           <img src='/logo.svg' className='h-12' />
           <h1 className='text-3xl'>notnull games</h1>
