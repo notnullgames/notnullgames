@@ -1,0 +1,21 @@
+import Callout from '@/Callout'
+import Example from '@/Example'
+
+<Callout emoji='😃'>Javascript is a fun & simple language, that is very easy to prototype ideas with. It's interpreted, so you are trading it's simplicity for the added size in your cart.</Callout>
+
+- See [cart structure](/null0/cart) for more info about how callbacks work.
+- See [API](/null0/api) for more info about the null0 API.
+- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/js)
+- WASI is exposed, and [std](https://bellard.org/quickjs/quickjs.html#std-module) and [os](https://bellard.org/quickjs/quickjs.html#os-module) are available
+
+Your code is interpreted with [quickjs](https://bellard.org/quickjs/) compiled as a cart (full WASI & null0 API is available & global.)
+
+Include [main.wasm](/carts/js/main.wasm) in your cart-zip, along with any assets you are using, and make a `main.js`. Here is an example:
+
+<Example src='js/example/main.js' />
+
+Which looks like this:
+
+<null0-cart src="/carts/js-example.null0"></null0-cart>
+
+If you want a similar language, but with more efficient cart-code, maybe try out [assemblyscript](assemblyscript). It's not exacly the same, and a bit less "loose", but the syntax is pretty similar, and it doesn't need to include the entire quickjs interpretor in your wasm.

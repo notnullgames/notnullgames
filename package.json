@@ -1,23 +1,37 @@
 {
-  "name": "notnullgames-site",
+  "name": "notnullgames",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next dev"
+    "start": "vite",
+    "build": "vite-react-ssg build",
+    "lint": "npx -y prettier -w .",
+    "dev": "npm start",
+    "dev:static": "vite-react-ssg dev"
   },
-  "author": "David Konsumer <konsumer@jetboystudio.com>",
-  "homepage": "https://notnullgames.vercel.app/",
   "dependencies": {
-    "@zip.js/zip.js": "^2.7.30",
-    "next": "^13.0.6",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sam-js": "^0.2.1"
+    "@easywasm/wasi": "^0.0.8",
+    "@heroicons/react": "^2.2.0",
+    "@mdx-js/react": "^3.1.0",
+    "@mdx-js/rollup": "^3.1.0",
+    "fflate": "^0.8.2",
+    "react": "^19.1.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^19.1.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "vite-plugin-mdx-plus": "^2.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.10",
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "daisyui": "^5.0.43",
+    "react-router-dom": "^6.30.1",
+    "tailwindcss": "^4.1.10",
+    "vite": "^6.3.5",
+    "vite-react-ssg": "^0.8.6"
   }
 }

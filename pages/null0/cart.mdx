@@ -1,283 +1,79 @@
-import { Callout, Tab, Tabs } from 'nextra-theme-docs'
-import Cart from '@/components/Cart.jsx'
+---
+sort: -3
+title: Anatomy of a Cart
+---
 
-<Callout emoji="👾">
-Games are called *carts* like *cartridges* for old console systems.
-</Callout>
+import Callout from '@/Callout'
+
+<Callout emoji='👾'>Games are called *carts* like *cartridges* for old console systems.</Callout>
 
 A cart is made up of a few callbacks. You don't have to implement them all, but whatever you do implement will be called by the host. It's just a zip file, with `main.wasm` in the root.
 
 Here is one, now:
 
-<Cart cart='/flappybird.null0' />
+<null0-cart src='/carts/js-flappy.null0' />
+[source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/flappy/)
 
-Source: [flappybird](https://github.com/notnullgames/null0/tree/main/src/carts/flappybird)
+All supported languages should have very simple/similar syntax.
 
-## all together
+You can find more examples [here](https://github.com/notnullgames/notnullgames/tree/main/examples).
 
-We'll get to more detail in a bit, but here is a quick lil example:
+### lifecycle
 
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-# This scope is shared between functions. It's an image. All asset-pointers are uint32.
-var logo:uint32
-
-# called when your cart loads
-proc load() {.null0.} =
-  # put logo.png file, in your cart, in assets/
-  logo = load_image("assets/logo.png")
-
-# called on every frame
-proc update(time:uint) {.null0.} =
-  # clear the screen
-  clear_background(BLACK)
-
-  # draw the logo
-  draw_image(logo, 64, 47)
-
-# called when the cart is unloaded
-proc unload() {.null0.} =
-  echo "Ok, bye."
-```
-</Tab>
-
-<Tab>
-```ts
-// This scope is shared between functions. It's an image. All asset-pointers are u32.
-let logo:u32
-
-// called when your cart loads
-export function load () {
-  // put logo.png file, in your cart, in assets/
-  logo = load_image("assets/logo.png")
-}
+```c
+// called on load, you can also use main() in C
+void load();
 
 // called on every frame
-export function update (time:uint) {
-  // clear the screen
-  clear_background(BLACK)
-
-  // draw the logo
-  draw_image(logo, 64, 47)
-}
+void update();
 
 // called when the cart is unloaded
-export function unload () {
-  trace("Ok, bye.")
-}
+void unload();
 ```
-</Tab>
 
-<Tab>
-```c
-#include "null0.h"
+### input
 
-// This scope is shared between functions. It's an image. All asset-pointers are u32.
-u32 logo;
+#### keys
 
-// called when your cart loads
-int main () {
-  // put logo.png file, in your cart, in assets/
-  logo = load_image("assets/logo.png");
-  return 0;
-}
+Button input is mapped using [libretro keys](https://docs.libretro.com/guides/input-and-controls/). If the event comes from a keyboard, `player` is set to `9999`. I think it helps to imagine all controllers are an SNES controller for most input-purposes, then you can use `buttonUp`/`buttonDown` for any player.
 
-// called on every frame
-NULL0_EXPORT("update")
-void update (unsigned int time) {
-  // clear the screen
-  clear_background(BLACK);
+- D-pad: <kbd className="kbd mx-2">▲</kbd><kbd className="kbd mr-2">◀︎</kbd><kbd className="kbd mr-2">▶︎</kbd><kbd className="kbd">▼</kbd>
+- <kbd className='kbd mr-2 bg-yellow-300 text-black'>A</kbd>: <kbd className='kbd mr-2'>z</kbd>
+- <kbd className='kbd mr-2 bg-red-600 text-white'>B</kbd>: <kbd className='kbd mr-2'>x</kbd>
+- <kbd className='kbd mr-2 bg-green-600 text-white'>X</kbd>: <kbd className='kbd mr-2'>a</kbd>
+- <kbd className='kbd mr-2 bg-blue-600 text-white'>Y</kbd>: <kbd className='kbd mr-2'>s</kbd>
+- <kbd className='kbd mr-2 bg-stone-400 text-black'>L</kbd>: <kbd className='kbd mr-2'>q</kbd>
+- <kbd className='kbd mr-2 bg-stone-400 text-black'>R</kbd>: <kbd className='kbd mr-2'>w</kbd>
+- <kbd className='kbd mr-2 bg-stone-400 text-black'>SELECT</kbd>: <kbd className='kbd mr-2'>shift</kbd>
+- <kbd className='kbd mr-2 bg-stone-400 text-black'>START</kbd>: <kbd className='kbd mr-2'>enter</kbd>
 
-  // draw the logo
-  draw_image(logo, 64, 47);
-}
+Here is an input-demo, that shows how the keys work:
 
-// called when the cart is unloaded
-NULL0_EXPORT("unload")
-void unload () {
-  log("Ok, bye.");
-}
-```
-</Tab>
-</Tabs>
+<null0-cart src='/carts/js-input.null0' />
+[source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/input/)
 
-You can find more examples [here](https://github.com/notnullgames/null0/tree/main/src/carts).
-
-## lifecycle
-
-These functions get called at different times in the life of your cart.
-
-### load()
-
-This function will kick things off. It's called once when the cart first loads, and in most languages, you can put stuff in the top-level of your game, instead. In C, you can also use `main()` which makes it look more "regular" and makes it so you don't need any special build-flags (to disable `main`.)
-
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-proc load() {.null0.} =
-  # do you setup stuff here
-  discard
-```
-</Tab>
-
-<Tab>
-```ts
-export function load() {
-  // do your setup stuff here
-}
-```
-</Tab>
-
-<Tab>
-```c
-NULL0_EXPORT("load")
-void load() {
-  // do your setup stuff here
-}
-```
-You can also use `main()`, which makes it look more "regular" and doesn;t require special build-flags to leave out main:
+Here are the callbacks you can define:
 
 ```c
-int main() {
-  // do your setup stuff here
-  return 0;
-}
+// mapped controller callback
+void buttonUp(GamepadButton button, unsigned int player);
+
+// mapped controller callback
+void buttonDown(GamepadButton button, unsigned int player);
+
+// called when keys are unpressed
+void keyUp(Key key);
+
+// called when keys are pressed
+void keyDown(Key key);
+
+// called when mouse-button is pressed
+void mouseDown(unsigned int button);
+
+// called when mouse-button is released
+void mouseUp(unsigned int button);
+
+// called when mouse is moved
+void mouseMoved(float x, float y);
+
 ```
-
-</Tab>
-</Tabs>
-
-
-### update()
-
-This function is called on every frame. Use it to update things. It receives the elapsed time in milliseconds, as an int. You can use this to animate things.
-
-
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-proc update(time:uint) {.null0.} =
-  # do your update stuff here
-  discard
-```
-</Tab>
-
-<Tab>
-```ts
-export function update() {
-  // do your update stuff here
-}
-```
-</Tab>
-
-<Tab>
-```c
-NULL0_EXPORT("update")
-void update() {
-  // do your update stuff here
-}
-```
-</Tab>
-</Tabs>
-
-
-### unload()
-
-This function is called when the cart exits.
-
-
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-proc unload() {.null0.} =
-  # do your shutdown stuff here
-  discard
-```
-</Tab>
-
-<Tab>
-```ts
-export function unload() {
-  // do your shutdown stuff here
-}
-```
-</Tab>
-
-<Tab>
-```c
-NULL0_EXPORT("unload")
-void unload() {
-  // do your shutdown stuff here
-}
-```
-</Tab>
-</Tabs>
-
-## input
-
-All input is routed through these, so you can respond to it. Learn more [here](input).
-
-### buttonDown()
-
-This is called whenever a button or directional is pressed on the virtual gamepad.
-
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-proc buttonDown(button: Button) {.null0.} =
-  # handle your input here
-  discard
-```
-</Tab>
-
-<Tab>
-```ts
-export function buttonDown(button: Button) {
-  // handle your input here
-}
-```
-</Tab>
-
-<Tab>
-```c
-NULL0_EXPORT("buttonDown")
-void buttonDown(Button button) {
-  // handle your input here
-}
-```
-</Tab>
-</Tabs>
-
-
-### buttonUp()
-
-This is called whenever a button or directional is un-pressed on the virtual gamepad.
-
-<Tabs items={['Nim', 'Assemblyscript', 'C/C++']}>
-<Tab>
-```nim
-proc buttonUp(button: Button) {.null0.} =
-  # handle your input here
-  discard
-```
-</Tab>
-
-<Tab>
-```ts
-export function buttonUp(button: Button) {
-  // handle your input here
-}
-```
-</Tab>
-
-<Tab>
-```c
-NULL0_EXPORT("buttonUp")
-void buttonUp(Button button) {
-  // handle your input here
-}
-```
-</Tab>
-</Tabs>
-

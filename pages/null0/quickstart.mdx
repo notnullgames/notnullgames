@@ -1,0 +1,29 @@
+---
+sort: -2
+title: Quick Start
+---
+
+You should have node/npm installed. We use that to make build-scripts & tooling.
+
+### setup a new cart-project
+
+```shell
+npx create null0@latest
+```
+
+It will ask a few questions, and get you started.
+
+Each language might require additional things installed (wasi-sdk, rust, nelua, nim, etc.)
+
+### I don't want to intall anything
+
+if you have docker, you can do the same stuff without installing anything else, and it even includes any build-requirements for all supported languages.
+
+```shell
+# common tasks
+docker run -v ${PWD}:/cart -it konsumer/null0 create
+docker run -v ${PWD}:/cart -it konsumer/null0 build
+
+# run bash instead of the wrapper, and do whatever you like
+docker run -v ${PWD}:/cart -it --entrypoint bash konsumer/null0
+```

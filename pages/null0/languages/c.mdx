@@ -1,73 +1,38 @@
-import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+---
+sort: -1
+---
 
-<Callout emoji='⚡'>
-C is a powerful and straight-forward language, and using it in null0 is highly recommended.
-</Callout>
+import Example from '@/Example'
+import Callout from '@/Callout'
 
-[C](https://en.wikipedia.org/wiki/C_(programming_language)) may seem a bit complicated, at first, but it's really simple, since it has nothing fancy, built-in. A lot of the annoying things (for me) about C, like dependencies and build-systems is basically done for you, so it's easy & fast to get started, and it ends up being about the same complexity as any other supported language, and your code will look very similar. To use it, you will need a C-compiler that can target wasm (I recommend clang/llvm).
+<Callout emoji='⚡'>C is a powerful and straight-forward language, and using it in null0 is highly recommended.</Callout>
 
-Here is some example code:
+- See [cart structure](/null0/cart) for more info about how callbacks work.
+- See [API](/null0/api) for more info about the null0 API.
+- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/c)
+- You can use WASI too, so all regular C stdlib-file stuff should work.
 
-#### src/main.c
-```c
-#include <null0.h>
+For building carts in C, if you want to get the most out of null0, you should install [wasi-sdk](https://github.com/WebAssembly/wasi-sdk). It will expose important WASI things (files, stdio, etc) and makes it easier to compile "regular" C code. Put [null0.h](https://github.com/notnullgames/null0/blob/main/carts/null0.h) in your include-path (or just in the same dir) and it should work great. Although emscripten and plain clang can also build your main.wasm, it requires some CLI flags, and you will not have access to lower-level WASI stuff, without some trickery.
 
-int main() {
-  trace("Hello from justlog.");
-  return 0;
-}
+A simple cart might look like this:
+
+<Example src='c/circle/main.c' />
+
+<null0-cart src="/carts/c-circle.null0"></null0-cart>
+
+And then you can compile to a cart with:
+
+```shell
+mkdir -p cart
+/opt/wasi-sdk/bin/clang main.c -o cart/main.wasm
+cd cart
+zip -rq ../mygame.null0 .
 ```
 
-You can export any [lifecycle functions](/null0/cart) like this:
+Anything in the zip-file is available in WASI filesystem, or any of the [null0 api](/null0/api), so if you have `cart/logo.png`, and you want to draw it in the middle of the screen, do this:
 
-```c
-#include <null0.h>
+<Example src='c/logo/main.c' />
 
-// this is same as main()
-NULL0_EXPORT("load")
-void load() {
-}
+That looks like this:
 
-NULL0_EXPORT("buttonDown")
-void buttonDown(GamepadButton button) {
-}
-
-NULL0_EXPORT("buttonUp")
-void buttonUp(GamepadButton button) {
-}
-
-NULL0_EXPORT("update")
-void update() {
-}
-```
-
-In all of our targets, we have a named-export system (see [load()](/null0/cart#load)) but in C, we also let you use the standard `int main()`.
-
-
-### easy build
-
-If you use [our template](https://github.com/notnullgames/null0-cart-c) or the [CLI quick-starter](../quick), it's a bit easier to get started quickly:
-
-```
-make
-```
-
-### manual build
-
-For null0, you need to import [the header](https://github.com/notnullgames/null0-cart-c/blob/main/src/null0.h), and you will get the `NULL0_EXPORT` macro and some null0 functions and constants.
-
-See [this Makefile](https://github.com/notnullgames/null0-cart-c/blob/main/Makefile) to get an idea of how to set it up.
-
-Basically, create `main.wasm`, however you want to, then you can create a zip file:
-
-```
-zip mycart.null0 -r main.wasm assets/
-```
-
-### docker
-
-If you have docker installed, you can use it to build, without needing to install anything else (no C/wasm toolchain, etc.)
-
-```
-docker run -it -v $(pwd):/cart konsumer/null0 make cart
-```
+<null0-cart src="/carts/c-logo.null0"></null0-cart>

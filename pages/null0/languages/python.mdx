@@ -1,6 +1,6 @@
 import Callout from '@/Callout'
 
-<Callout emoji='n'>[Nim](https://nim-lang.org/) is a fun language that compiles to C (or C++, or a few more.) It feels a little like python or lua.</Callout>
+<Callout emoji='🐍'>Python is a fun & simple language, that is very easy to prototype ideas with. Normally, it's interpreted which adds some cart-size, but we compile to minimal wasm.</Callout>
 
 - See [cart structure](/null0/cart) for more info about how callbacks work.
 - See [API](/null0/api) for more info about the null0 API.
@@ -10,3 +10,9 @@ import Callout from '@/Callout'
 ### TODO
 
 I have not made a header/library for this language, but it is technically workable. The host will export [null0 api](/null0/api) as well as WASI-preview1. I could [use help](https://github.com/notnullgames/null0)!
+
+Look into these:
+
+- [py2wasm](https://github.com/wasmerio/py2wasm)
+- [rpython](https://maori.geek.nz/rpython-compiling-python-to-c-for-the-speed-5411d57a5316)
+- [codon](https://github.com/exaloop/codon)
