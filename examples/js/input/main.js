@@ -59,6 +59,8 @@ export function update() {
   draw_circle(540, 220, 23, RED)
   draw_circle_outline(460, 220, 23, 5, buttons[GAMEPAD_BUTTON_Y] ? LIME : BLACK)
   draw_circle_outline(500, 185, 23, 5, buttons[GAMEPAD_BUTTON_X] ? DARKBLUE : BLACK)
+
+  // are these inverted?
   draw_circle_outline(500, 255, 23, 5, buttons[GAMEPAD_BUTTON_B] ? ORANGE : BLACK)
   draw_circle_outline(540, 220, 23, 5, buttons[GAMEPAD_BUTTON_A] ? MAROON : BLACK)
 

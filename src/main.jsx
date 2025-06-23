@@ -1,5 +1,4 @@
 import { ViteReactSSG } from 'vite-react-ssg'
-
 import './style.css'
 import Page from './Page'
 
@@ -53,3 +52,4 @@ export const createRoot = ViteReactSSG(
     // do something.
   }
 )
+globalThis.createRoot = createRoot

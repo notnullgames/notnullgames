@@ -1,6 +1,7 @@
 // very simple flappy-bird
 
 const images = {}
+const sounds = {}
 let font_text
 let font_bignumbers
 let score = 0
@@ -30,6 +31,18 @@ const updateHandlers = {
     // very stupid score system
     if (t % 120 === 119) {
       score++
+
+      if (score === 5) {
+        stop_sound(sounds.music1)
+        play_sound(sounds.music2, true)
+        stop_sound(sounds.music3)
+      }
+
+      if (score === 10) {
+        stop_sound(sounds.music1)
+        stop_sound(sounds.music2)
+        play_sound(sounds.music3, true)
+      }
     }
 
     draw_parallax(images['sky'], t / 10, 0, 914)
@@ -40,6 +53,10 @@ const updateHandlers = {
     if (bird.y > 320) {
       currentState = 'over'
       draw_text(font_text, 'GAME OVER!', 160, 240, WHITE)
+      play_sound(sounds.hit)
+      stop_sound(sounds.music1)
+      stop_sound(sounds.music2)
+      stop_sound(sounds.music3)
     }
   },
 
@@ -56,12 +73,14 @@ const buttonHandlers = {
   title(button) {
     if ([GAMEPAD_BUTTON_A, GAMEPAD_BUTTON_B, GAMEPAD_BUTTON_START].includes(button)) {
       currentState = 'playing'
+      play_sound(sounds.music1, true)
     }
   },
 
   playing(button) {
     if ([GAMEPAD_BUTTON_A, GAMEPAD_BUTTON_B].includes(button)) {
       bird.y -= 40
+      play_sound(sounds.wing)
     }
 
     if (button === GAMEPAD_BUTTON_START) {
@@ -77,6 +96,7 @@ const buttonHandlers = {
 
   over(button) {
     if ([GAMEPAD_BUTTON_A, GAMEPAD_BUTTON_B, GAMEPAD_BUTTON_START].includes(button)) {
+      play_sound(sounds.music1, true)
       currentState = 'playing'
       bird.angle = 0
       bird.x = SCREEN_WIDTH / 2
@@ -107,13 +127,17 @@ export function load() {
   for (const n of ['bird0', 'bird1', 'bird2', 'land', 'logo', 'pipe-bottom', 'pipe-top', 'sky']) {
     images[n] = load_image(`assets/${n}.png`)
     if (!images[n]) {
-      console.log(`${n} could not be loaded.`)
+      console.log(`${n} image could not be loaded.`)
     } else {
       // my assets were all made for 320x240 so 2x them
       const i = image_scale(images[n], 2, 2, FILTER_NEARESTNEIGHBOR)
       unload_image(images[n])
       images[n] = i
     }
+  }
+
+  for (const n of ['hit', 'point', 'swooshing', 'wing', 'music1', 'music2', 'music3']) {
+    sounds[n] = load_sound(`assets/sounds/${n}.ogg`)
   }
 }
 
