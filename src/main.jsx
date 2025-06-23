@@ -2,7 +2,7 @@ import { ViteReactSSG } from 'vite-react-ssg'
 
 import './null0-cart.js'
 import './style.css'
-import Page from './page'
+import Page from './Page'
 
 // simple title-case
 const titleCase = (str = '') =>
