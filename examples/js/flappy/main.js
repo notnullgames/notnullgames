@@ -1,7 +1,7 @@
 // very simple flappy-bird
 
 const images = {}
-let font_pixel_18x16
+let font_text
 let font_bignumbers
 let score = 0
 
@@ -14,7 +14,7 @@ const bird = {
 let t = 0
 
 // simple game-state system
-let currentState = 'playing'
+let currentState = 'title'
 const updateHandlers = {
   title(t) {
     draw_parallax(images['sky'], t / 10, 0, 914)
@@ -27,6 +27,11 @@ const updateHandlers = {
     // gravity
     bird.y += 3
 
+    // very stupid score system
+    if (t % 120 === 119) {
+      score++
+    }
+
     draw_parallax(images['sky'], t / 10, 0, 914)
     draw_parallax(images['land'], t, 360, 640)
     draw_bird(t)
@@ -34,7 +39,7 @@ const updateHandlers = {
 
     if (bird.y > 320) {
       currentState = 'over'
-      draw_text(font_pixel_18x16, 'GAME OVER', 260, 240, WHITE)
+      draw_text(font_text, 'GAME OVER!', 160, 240, WHITE)
     }
   },
 
@@ -96,8 +101,8 @@ function draw_parallax(image, x, y, width) {
 }
 
 export function load() {
-  font_pixel_18x16 = load_font_tty('assets/font_pixel-18x16.png', 18, 16, ' !*+,-./0123"456789:;<=#>?@ABCDEFG$HIJKLMNOPQ%RSTUVWXYZ[&\\]^_`\'(){|}~')
-  font_bignumbers = load_font_tty('assets/font_bignumbers.png', 24, 36, '0123456789 ')
+  font_text = load_font_tty('assets/font_pixel-18x16.png', 36, 32, ' !*+,-./0123"456789:;<=#>?@ABCDEFG$HIJKLMNOPQ%RSTUVWXYZ[&\\]^_`\'(){|}~')
+  font_bignumbers = load_font_tty('assets/font_bignumbers.png', 48, 72, '0123456789 ')
 
   for (const n of ['bird0', 'bird1', 'bird2', 'land', 'logo', 'pipe-bottom', 'pipe-top', 'sky']) {
     images[n] = load_image(`assets/${n}.png`)
@@ -113,11 +118,6 @@ export function load() {
 }
 
 export function update() {
-  // very stupid score system
-  if (t % 120 === 119) {
-    score++
-  }
-
   updateHandlers[currentState](t++)
 }
 

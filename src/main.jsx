@@ -1,5 +1,4 @@
 import { ViteReactSSG } from 'vite-react-ssg'
-import { hydrateRoot } from 'react-dom/client'
 
 import './null0-cart.js'
 import './style.css'

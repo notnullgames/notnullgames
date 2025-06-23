@@ -1,7 +1,5 @@
 // Basic layout for all pages
 
-import { useState, useEffect } from 'react'
-
 // This makes menu of top-level articles that are not home
 function MenuTop({ pages, nav, slug }) {
   return pages
@@ -52,7 +50,7 @@ function MenuNav({ pages, nav, slug, prefix = '/' }) {
   return out
 }
 
-// TODO: make it reponsive (hide sub-menu, with button) so nav doesn;t take up whole screen
+// TODO: make it reponsive (hide sub-menu, with button) so nav doesn't take up whole screen
 
 export default function Page({ children, pages = [], meta, slug, nav }) {
   return (
