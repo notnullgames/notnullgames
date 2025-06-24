@@ -2,6 +2,7 @@ import { ViteReactSSG } from 'vite-react-ssg'
 import '@/style.css'
 import Page from '@/Page'
 import pages from '@/pages'
+import carts from '@/carts'
 import GalleryPlayer from '@/GalleryPlayer'
 import { hydrateRoot } from 'react-dom/client'
 
@@ -24,8 +25,9 @@ const routes = pages.map(({ PageComponent, slug, ...info }) => {
 })
 
 routes.push({
-  path: '/gallery/:cartId',
-  element: <GalleryPlayer />
+  path: 'gallery/:cartId',
+  element: <GalleryPlayer />,
+  getStaticPaths: () => carts.map(({ id }) => `gallery/${id}`)
 })
 
 export const createRoot = ViteReactSSG(
