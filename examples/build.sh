@@ -4,7 +4,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-CART_DIR="${SCRIPT_DIR}/../carts/"
+CART_DIR="${SCRIPT_DIR}/../public/carts/"
 
 # just in case it's not available
 mkdir -p "${CART_DIR}"

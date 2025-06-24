@@ -38,7 +38,7 @@ const updateHandlers = {
         stop_sound(sounds.music3)
       }
 
-      if (score === 10) {
+      if (score === 9) {
         stop_sound(sounds.music1)
         stop_sound(sounds.music2)
         play_sound(sounds.music3, true)
