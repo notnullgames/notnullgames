@@ -19,7 +19,7 @@ export default function CartCard({ id, title, description, author, language, sou
           <a download href={`/carts/${id}.null0`} className='btn btn-secondary'>
             Download
           </a>
-          <a href={`gallery/${id}`} className='btn btn-primary'>
+          <a href={`/gallery/${id}`} className='btn btn-primary'>
             Play
           </a>
         </div>
