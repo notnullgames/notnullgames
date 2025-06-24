@@ -6,7 +6,6 @@ export default function Null0Cart({ src, ...props }) {
 
   useEffect(() => {
     const c = loadCart(src, r.current)
-    console.log(src)
   }, [])
 
   return <canvas ref={r} {...props}></canvas>

@@ -27,7 +27,7 @@ function MenuNav({ pages, nav, slug, prefix = '/' }) {
       out.push(
         <li key={page.slug}>
           <details open>
-            <summary className={slug === page.slug || nav.at(-1) === page.slug ? 'bg-base-300' : ''}>
+            <summary className={slug.split('/').at(-1) === page.slug || nav.at(-1) === page.slug ? 'bg-base-300' : ''}>
               <a href={`${prefix}${page.slug}`}>{page.meta.title}</a>
             </summary>
             <ul>
@@ -39,7 +39,7 @@ function MenuNav({ pages, nav, slug, prefix = '/' }) {
     } else {
       out.push(
         <li key={page.slug}>
-          <a href={`${prefix}${page.slug}`} className={nav.at(-1) === page.slug || slug === page.slug ? 'menu-active' : ''}>
+          <a href={`${prefix}${page.slug}`} className={nav.at(-1) === page.slug || slug.split('/').at(-1) === page.slug ? 'menu-active' : ''}>
             {page.meta.title}
           </a>
         </li>
