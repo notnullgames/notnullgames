@@ -9,14 +9,18 @@ export default function CartCard({ id, title, description, author, language, sou
       <div className='card-body'>
         <h2 className='card-title !my-0'>{displayTitle}</h2>
         {author && <div className='text-xs mb-2'>{author}</div>}
-        <Null0Cart src={`/carts/${id}.null0`} />
+        {/*<Null0Cart src={`/carts/${id}.null0`} />*/}
+        <img src={`/carts/${id}.png`} alt={displayTitle} />
         {description && <div>{description}</div>}
         <div className='card-actions justify-end'>
           <a target='_new' href={source} className='btn btn-secondary'>
             Source
           </a>
-          <a download href={`/carts/${id}.null0`} className='btn btn-primary'>
+          <a download href={`/carts/${id}.null0`} className='btn btn-secondary'>
             Download
+          </a>
+          <a href={`/gallery/${id}`} className='btn btn-primary'>
+            Play
           </a>
         </div>
       </div>

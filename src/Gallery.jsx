@@ -1,7 +1,5 @@
 import CartCard from '@/CartCard'
-import { parse } from 'yaml'
-
-const carts = Object.entries(import.meta.glob('../public/carts/*.yml', { eager: true, query: '?raw' })).map(([filename, m]) => ({ ...parse(m.default), id: filename.replace(/^\.\.\/public\/carts\/(.+)\.yml/, '$1') }))
+import carts from '@/carts'
 
 export default function Gallery() {
   return (
