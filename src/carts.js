@@ -2,4 +2,4 @@
 
 import { parse } from 'yaml'
 
-export default Object.entries(import.meta.glob('../public/carts/*.yml', { eager: true, query: '?raw' })).map(([filename, m]) => ({ ...parse(m.default), id: filename.replace(/^\.\.\/public\/carts\/(.+)\.yml/, '$1') }))
+export default Object.entries(import.meta.glob('../carts/*.yml', { eager: true, query: '?raw' })).map(([filename, m]) => ({ ...parse(m.default), id: filename.replace(/^\.\.\/carts\/(.+)\.yml/, '$1') }))

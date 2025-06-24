@@ -4,8 +4,10 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+CART_DIR="${SCRIPT_DIR}/../carts/"
+
 # just in case it's not available
-mkdir -p "${SCRIPT_DIR}/../public/carts/"
+mkdir -p "${CART_DIR}"
 
 # grab the current C-header
 if [ ! -f "${SCRIPT_DIR}/c/null0.h" ]; then
@@ -23,7 +25,7 @@ BUILDCART() {
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
   /opt/wasi-sdk/bin/clang -I "${SCRIPT_DIR}/c" "${source_dir}/main.c" -o ./main.wasm
-  zip -rq "${SCRIPT_DIR}/../public/carts/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
+  zip -rq "${CART_DIR}/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
 }
 
 # build a JS cart
@@ -35,8 +37,8 @@ BUILDJSCART() {
   mkdir -p "/tmp/${name}"
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
-  cp  "${SCRIPT_DIR}/../public/carts/main.wasm" .
-  zip -rq "${SCRIPT_DIR}/../public/carts/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
+  cp  "${SCRIPT_DIR}/js/main.wasm" .
+  zip -rq "${CART_DIR}/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
 }
 
 

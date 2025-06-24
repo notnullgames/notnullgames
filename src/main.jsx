@@ -1,5 +1,4 @@
 import { ViteReactSSG } from 'vite-react-ssg'
-import { createRoot } from 'react-dom/client'
 import '@/style.css'
 import Page from '@/Page'
 import pages from '@/pages'
@@ -26,12 +25,11 @@ routes.push({
   element: <GalleryPlayer />
 })
 
-globalThis.createRoot =
-  ViteReactSSG(
-    // react-router-dom data routes
-    { routes },
-    // function to have custom setups
-    ({ router, routes, isClient, initialState }) => {
-      // do something.
-    }
-  ) || createRoot
+export const createRoot = ViteReactSSG(
+  // react-router-dom data routes
+  { routes },
+  // function to have custom setups
+  ({ router, routes, isClient, initialState }) => {
+    // do something.
+  }
+)

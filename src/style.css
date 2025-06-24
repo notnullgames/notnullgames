@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@plugin "daisyui";
+@plugin "daisyui" {
+  logs: false;
+}
 
 @media (prefers-color-scheme: dark) {
   .shiki,
