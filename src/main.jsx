@@ -3,6 +3,9 @@ import '@/style.css'
 import Page from '@/Page'
 import pages from '@/pages'
 import GalleryPlayer from '@/GalleryPlayer'
+import { hydrateRoot } from 'react-dom/client'
+
+globalThis.hydrateRoot = hydrateRoot
 
 const routes = pages.map(({ PageComponent, slug, ...info }) => {
   const route = {

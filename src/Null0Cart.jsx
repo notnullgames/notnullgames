@@ -6,9 +6,8 @@ export default function Null0Cart({ src, ...props }) {
 
   useEffect(() => {
     const c = loadCart(src, r.current)
-    // TODO: good way to stop wasm?
-    return () => {}
-  }, [src])
+    console.log(src)
+  }, [])
 
   return <canvas ref={r} {...props}></canvas>
 }
