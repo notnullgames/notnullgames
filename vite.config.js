@@ -10,8 +10,8 @@ export default defineConfig({
     mdxPlus({
       shiki: {
         themes: {
-          light: 'vitesse-light',
-          dark: 'vitesse-dark'
+          dark: 'vitesse-dark',
+          light: 'vitesse-dark'
         }
       }
     }),
