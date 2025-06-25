@@ -20,7 +20,8 @@ export default function Example({ src }) {
     codeToHtml(s, { lang: getLang(src), theme: dark }).then(outSet)
   }, [src])
 
-  const onCopy = () => {
+  const onCopy = async () => {
+    await navigator.clipboard.writeText(source)
     tooltipSet('Copied!')
     setTimeout(() => tooltipSet('Copy to clipboard'), 1000)
   }
