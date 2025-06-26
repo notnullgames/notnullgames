@@ -1,4 +1,4 @@
-// put this file in the cart-zip
+// Example: importing other files. Put this file in the cart-zip
 import mod from './mod.js'
 
 export function load() {
