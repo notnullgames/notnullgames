@@ -1,16 +1,25 @@
 // Basic layout for all pages
 
+import githubLogo from '@/github-mark-white.png'
+
 // This makes menu of top-level articles that are not home
 function MenuTop({ pages, nav, slug }) {
-  return pages
-    .filter((page) => page.slug !== '' && page.nav.length === 0)
-    .map((page) => (
-      <li key={page.slug}>
-        <a href={`/${page.slug}`} className={nav.at(0) === page.slug || slug === page.slug ? 'menu-active' : ''}>
-          {page.meta.title}
-        </a>
-      </li>
-    ))
+  return [
+    ...pages
+      .filter((page) => page.slug !== '' && page.nav.length === 0)
+      .map((page) => (
+        <li key={page.slug}>
+          <a href={`/${page.slug}`} className={nav.at(0) === page.slug || slug === page.slug ? 'menu-active' : ''}>
+            {page.meta.title}
+          </a>
+        </li>
+      )),
+    <li key='github'>
+      <a href='https://github.com/notnullgames/'>
+        <img className='h-8 w-8' src={githubLogo} />
+      </a>
+    </li>
+  ]
 }
 
 // This makes full nav-tree
@@ -61,7 +70,7 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
           <h1 className='text-3xl'>notnull games</h1>
         </a>
         <nav className='px-2'>
-          <ul className='menu menu-horizontal'>
+          <ul className='menu menu-horizontal items-center'>
             <MenuTop pages={pages} nav={nav} slug={slug} />
           </ul>
         </nav>
