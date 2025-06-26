@@ -59,8 +59,6 @@ function MenuNav({ pages, nav, slug, prefix = '/' }) {
   return out
 }
 
-// TODO: make it reponsive (hide sub-menu, with button) so nav doesn't take up whole screen
-
 export default function Page({ children, pages = [], meta, slug, nav }) {
   return (
     <>
@@ -75,11 +73,13 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
           </ul>
         </nav>
       </header>
-      <div className='flex flex-row bg-base-200 text-base-content h-full min-h-screen min-w-full'>
-        <ul className='menu rounded-box p-4 pt-28 fixed top-0 left-0 w-80'>
-          <MenuNav pages={pages} nav={nav} slug={slug} />
-        </ul>
-        <main className='bg-base-100 p-8 pt-28 prose lg:prose-xl dark:prose-invert ml-80 !max-w-none grow'>
+      <div className='flex flex-row h-full w-full mt-28'>
+        <nav>
+          <ul className='menu rounded-box p-4 bg-base-200 text-base-content w-xs ml-4 grow sticky top-28'>
+            <MenuNav pages={pages} nav={nav} slug={slug} />
+          </ul>
+        </nav>
+        <main className='bg-base-100 p-8 prose lg:prose-xl dark:prose-invert max-w-2/3'>
           <h2>{meta.title}</h2>
           {children}
         </main>
@@ -87,3 +87,19 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
     </>
   )
 }
+
+/*
+
+<div className='flex flex-row'>
+        <div className='flex flex-row bg-base-200 text-base-content h-full min-h-screen min-w-full'>
+          <ul className='menu rounded-box p-4 pt-28'>
+            <MenuNav pages={pages} nav={nav} slug={slug} />
+          </ul>
+        </div>
+        <main className='bg-base-100 p-8 prose lg:prose-xl dark:prose-invert max-w-none w-full h-full grow'>
+          <h2>{meta.title}</h2>
+          {children}
+        </main>
+      </div>
+
+      */
