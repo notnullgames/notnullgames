@@ -8,7 +8,7 @@ import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='👾'>Games are called *carts* like *cartridges* for old console systems.</Callout>
 
-A cart is made up of a few callbacks. You don't have to implement them all, but whatever you do implement will be called by the host. It's just a zip file, with `main.wasm` in the root.
+A cart is made up of a few callbacks. You don't have to implement them all, but whatever you do implement will be called by the host. It's just a zip file, with `main.wasm` in the root. Use functions from the [null0 api](api) to make your game.
 
 Here is one, now:
 
@@ -78,6 +78,3 @@ void mouseUp(unsigned int button);
 void mouseMoved(float x, float y);
 
 ```
-
-Use functions from the [null0 api](api) to make your game.
-
