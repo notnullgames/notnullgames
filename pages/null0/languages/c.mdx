@@ -12,6 +12,7 @@ import Null0Cart from '@/Null0Cart'
 - See [API](/null0/api) for more info about the null0 API.
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/c)
 - You can use WASI too, so all regular C stdlib-file stuff should work.
+- Check out the [C template project](https://github.com/notnullgames/cart_c)
 
 For building carts in C, if you want to get the most out of null0, you should install [wasi-sdk](https://github.com/WebAssembly/wasi-sdk). It will expose important WASI things (files, stdio, etc) and makes it easier to compile "regular" C code. Put [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) in your include-path (or just in the same dir) and it should work great. Although emscripten and plain clang can also build your main.wasm, it requires some CLI flags, and you will not have access to lower-level WASI stuff, without some trickery, so wasi-sdk is highly recommended (seamless WASI, whcih includes filesystem access and things.)
 
