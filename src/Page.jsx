@@ -67,39 +67,23 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
           <img src='/logo.svg' className='h-12' />
           <h1 className='text-3xl'>notnull games</h1>
         </a>
-        <nav className='px-2'>
+        <nav className='px-2 '>
           <ul className='menu menu-horizontal items-center'>
             <MenuTop pages={pages} nav={nav} slug={slug} />
           </ul>
         </nav>
       </header>
-      <div className='flex flex-row h-full w-full mt-28'>
-        <nav>
-          <ul className='menu rounded-box p-4 bg-base-200 text-base-content w-xs ml-4 grow sticky top-28'>
+      <div className='flex mt-23 gap-4'>
+        <nav className='p-4 bg-base-200 text-base-content min-h-screen'>
+          <ul className='menu rounded-box bg-base-200 text-base-content ml-4 sticky top-28'>
             <MenuNav pages={pages} nav={nav} slug={slug} />
           </ul>
         </nav>
-        <main className='bg-base-100 p-8 prose lg:prose-xl dark:prose-invert max-w-2/3'>
+        <div className='max-w-none prose lg:prose-xl dark:prose-invert overflow-x-auto max-w-full mt-8 pb-8'>
           <h2>{meta.title}</h2>
-          {children}
-        </main>
+          <main>{children}</main>
+        </div>
       </div>
     </>
   )
 }
-
-/*
-
-<div className='flex flex-row'>
-        <div className='flex flex-row bg-base-200 text-base-content h-full min-h-screen min-w-full'>
-          <ul className='menu rounded-box p-4 pt-28'>
-            <MenuNav pages={pages} nav={nav} slug={slug} />
-          </ul>
-        </div>
-        <main className='bg-base-100 p-8 prose lg:prose-xl dark:prose-invert max-w-none w-full h-full grow'>
-          <h2>{meta.title}</h2>
-          {children}
-        </main>
-      </div>
-
-      */
