@@ -78,3 +78,25 @@ void mouseUp(unsigned int button);
 void mouseMoved(float x, float y);
 
 ```
+
+### distribution
+
+To distribute your game to others, you can either save your cart as main.null0, alongside the native runtime (and name the runtime whatever you want) or you can embed it all in one executable:
+
+```sh
+# linux or mac
+./tools/embed_cart.js build/host/null0 build/carts/input_c.null0 tester
+
+# windows
+node ./tools/embed_cart.js build/host/null0.exe build/carts/input_c.null0 tester.exe
+
+# or
+
+# linux or mac
+cat build/host/null0 build/carts/input_c.null0 > tester
+
+# windows
+copy /b build/host/null0.exe+build/carts/input_c.null0 tester.exe
+```
+
+This is very similar to how [love2d works](https://love2d.org/wiki/Game_Distribution).
