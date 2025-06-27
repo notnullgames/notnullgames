@@ -11,9 +11,13 @@ mkdir -p "${CART_DIR}"
 
 # grab the current C-header
 if [ ! -f "${SCRIPT_DIR}/c/null0.h" ]; then
-  curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/null0.h > "${SCRIPT_DIR}/c/null0.h"
+  curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/c/null0.h > "${SCRIPT_DIR}/c/null0.h"
 fi
 
+# grab the current C-header
+if [ ! -f "${SCRIPT_DIR}/nelua/null0.nelua" ]; then
+  curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/nelua/null0.nelua > "${SCRIPT_DIR}/nelua/null0.nelua"
+fi
 
 # build a C-cart
 BUILD_CART_C() {
@@ -50,7 +54,7 @@ BUILD_CART_NELUA() {
   mkdir -p "/tmp/${name}"
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
-  nelua -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
+  nelua --cflags="-I \"${SCRIPT_DIR}/c\"" -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
 }
 
