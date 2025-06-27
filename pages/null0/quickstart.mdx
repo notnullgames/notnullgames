@@ -3,40 +3,20 @@ sort: -2
 title: Quick Start
 ---
 
-import Callout from '@/Callout'
+- Get a programmer's editor. I like [zed](https://zed.dev/), but [vscode](https://code.visualstudio.com/) is a popular choice.
+- Choose from [our templates](https://github.com/search?q=topic%3Acart+org%3Anotnullgames&type=Repositories). Pick a language you want to make your cart in.
+- Press the "Use this template" button and create your own cart repo
+- Do a search in your editor, in your project, for `mygame` and change it to whatever you want to call your game. I recommend names without "weird characters". Just use `A-z`, `0-9`, and `_`.
 
-<Callout emoji='☠️' className='alert-soft alert-warning'>
-  I have not setup docker or the node creator-script, so this is more like future-plans.
-</Callout>
+Optional: these carts include a few npm actions. To use them install [nodejs](https://nodejs.org/)
 
-Check out [build.sh](https://github.com/notnullgames/notnullgames/blob/main/examples/build.sh) to see how I build all the examples on this site. It's a simplified shell-script approach.
+- `npm start` - start a local web-server, and rebuild when your files change. This is great for trying out your ideas.
+- `npm run build` - build your project and output to `webroot/mygame.null0`
 
-### setup a new cart-project
-
-You should have node/npm installed. We use that to make build-scripts & tooling.
-
-```shell
-npm create null0 my-fun-game
-```
-
-It will ask a few questions, and get you started.
-
-Each language might require additional things installed (wasi-sdk, rust, nelua, nim, etc.)
-
-### I don't want to intall anything
-
-if you have docker, you can do the same stuff without installing anything else, and it even includes any build-requirements for all supported languages.
-
-```shell
-# common tasks
-docker run -v ${PWD}:/cart -it konsumer/null0 create
-docker run -v ${PWD}:/cart -it konsumer/null0 build
-
-# run bash instead of the wrapper, and do whatever you like
-docker run -v ${PWD}:/cart -it --entrypoint bash konsumer/null0
-```
+I just use them as a way to record scripts in a cross-platform way (and allow use of libraries, etc.)
 
 ## ok, now what?
 
 - See [API](/null0/api) for more info about the null0 API.
+- See [Anatomy of a Cart](/null0/cart) to get a feel for what functions to expose to make your game
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
