@@ -14,7 +14,7 @@ if [ ! -f "${SCRIPT_DIR}/c/null0.h" ]; then
   curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/c/null0.h > "${SCRIPT_DIR}/c/null0.h"
 fi
 
-# grab the current C-header
+# grab the current nelua-header
 if [ ! -f "${SCRIPT_DIR}/nelua/null0.nelua" ]; then
   curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/nelua/null0.nelua > "${SCRIPT_DIR}/nelua/null0.nelua"
 fi
@@ -55,7 +55,7 @@ BUILD_CART_NELUA() {
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
   nelua --cflags="-I \"${SCRIPT_DIR}/c\"" -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
-  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nelua"
 }
 
 

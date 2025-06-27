@@ -9,16 +9,33 @@ import Null0Cart from '@/Null0Cart'
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/js)
 - WASI is exposed, and [std](https://bellard.org/quickjs/quickjs.html#std-module) and [os](https://bellard.org/quickjs/quickjs.html#os-module) are available
 - Check out the [JS template project](https://github.com/notnullgames/cart_js]
+- Your code is interpreted with [quickjs](https://bellard.org/quickjs/) compiled as a cart (full WASI & null0 API is available & global.)
+- Include [main.wasm](https://github.com/notnullgames/notnullgames/raw/refs/heads/main/examples/js/main.wasm) in your cart-zip, along with any assets you are using, and make a `main.js`.
 
-
-Your code is interpreted with [quickjs](https://bellard.org/quickjs/) compiled as a cart (full WASI & null0 API is available & global.)
-
-Include [main.wasm](https://github.com/notnullgames/notnullgames/raw/refs/heads/main/examples/js/main.wasm) in your cart-zip, along with any assets you are using, and make a `main.js`. Here is an example:
+A simple cart might look like this:
 
 <Example src='js/example/main.js' />
 
 Which looks like this:
 
 <Null0Cart src='/carts/js-example.null0' />
+
+And then you can compile to a cart with:
+
+```sh
+mkdir -p cart
+curl https://github.com/notnullgames/notnullgames/raw/refs/heads/main/examples/js/main.wasm > cart/mian.wasm
+cp *.js cart
+cd cart
+zip -rq "../mygame.null0" .
+```
+
+See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
+
+You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)
+
+For `nelua` command, you can use `--cflags="-I WHEREVER_NULL0_H_IS"` and `-L WHEREVER_NULL0_NELUA_IS`
+
+For `zip` command, you can skip packaging some files (like `.DS_Store`) with `-x ".DS_Store" "__*"` (after all the other options.)
 
 If you want a similar language, but with more efficient cart-code, maybe try out [assemblyscript](assemblyscript). It's not exacly the same, and a bit less "loose", but the syntax is pretty similar, and it doesn't need to include the entire quickjs interpretor in your wasm.

@@ -13,8 +13,7 @@ import Null0Cart from '@/Null0Cart'
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/c)
 - You can use WASI too, so all regular C stdlib-file stuff should work.
 - Check out the [C template project](https://github.com/notnullgames/cart_c)
-
-For building carts in C, if you want to get the most out of null0, you should install [wasi-sdk](https://github.com/WebAssembly/wasi-sdk). It will expose important WASI things (files, stdio, etc) and makes it easier to compile "regular" C code. Put [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) in your include-path (or just in the same dir) and it should work great. Although emscripten and plain clang can also build your main.wasm, it requires some CLI flags, and you will not have access to lower-level WASI stuff, without some trickery, so wasi-sdk is highly recommended (seamless WASI, whcih includes filesystem access and things.)
+- You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
 
 A simple cart might look like this:
 
@@ -28,8 +27,12 @@ And then you can compile to a cart with:
 mkdir -p cart
 /opt/wasi-sdk/bin/clang main.c -o cart/main.wasm
 cd cart
-zip -rq ../mygame.null0 .
+zip -rq "../mygame.null0" .
 ```
+
+See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
+
+For `zip` command, you can skip packaging some files (like `.DS_Store` and `*.c`) with `-x ".DS_Store" "__*" "*.c" "*.h"` (after all the other options.)
 
 Anything in the zip-file is available in WASI filesystem, or any of the [null0 api](/null0/api), so if you have `cart/logo.png`, and you want to draw it in the middle of the screen, do this:
 

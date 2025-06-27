@@ -6,43 +6,29 @@ import Null0Cart from '@/Null0Cart'
 
 - See [cart structure](/null0/cart) for more info about how callbacks work.
 - See [API](/null0/api) for more info about the null0 API.
-- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
+- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/nelua)
 - You can use WASI too, so you can use regular file-stuff
-- Check out the [Lua template project](https://github.com/notnullgames/cart_nelua)
+- Check out the [Nelua template project](https://github.com/notnullgames/cart_nelua)
+- You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)
+- You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
 
-You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
-
-Here is an example:
+A simple cart might look like this:
 
 <Example src='nelua/colorbars/main.nelua' />
 
 <Null0Cart src='/carts/nelua-colorbars.null0' />
 
-
-Here is how I like to build it (in a shell-script):
+And then you can compile to a cart with:
 
 ```sh
-# location of current file
-SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
-
-# where to output carts
-CART_DIR="${SCRIPT_DIR}"
-
-# build a Nelua cart
-BUILD_CART_NELUA() {
-  name="${1}"
-  source_dir="${2}"
-  echo "CART: Nelua - ${name}"
-  rm -rf "/tmp/${name}"
-  mkdir -p "/tmp/${name}"
-  cd "/tmp/${name}"
-  cp -R "${source_dir}"/* .
-  nelua -L "${SCRIPT_DIR}" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
-  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
-}
-
-# do the actual build
-BUILD_CART_NELUA "weird" "${SCRIPT_DIR}/src"
+mkdir -p cart
+nelua main.nelua -r --cc "/opt/wasi-sdk/bin/clang" -o ./cart/main.wasm
+cd cart
+zip -rq "../mygame.null0" .
 ```
 
-You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)
+See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
+
+For `nelua` command, you can use `--cflags="-I WHEREVER_NULL0_H_IS"` and `-L WHEREVER_NULL0_NELUA_IS`
+
+For `zip` command, you can skip packaging some files (like `.DS_Store` and `*.nelua`) with `-x ".DS_Store" "__*" "*.nelua"` (after all the other options.)
