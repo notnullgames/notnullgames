@@ -8,6 +8,7 @@ import Null0Cart from '@/Null0Cart'
 - See [API](/null0/api) for more info about the null0 API.
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
 - You can use WASI too, so you can use regular file-stuff
+- Check out the [Lua template project](https://github.com/notnullgames/cart_nelua)
 
 You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
 
@@ -36,10 +37,12 @@ BUILD_CART_NELUA() {
   mkdir -p "/tmp/${name}"
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
-  nelua -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
+  nelua -L "${SCRIPT_DIR}" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
 }
 
 # do the actual build
 BUILD_CART_NELUA "weird" "${SCRIPT_DIR}/src"
 ```
+
+You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)

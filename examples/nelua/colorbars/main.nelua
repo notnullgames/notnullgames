@@ -1,6 +1,5 @@
 require 'null0'
 
--- called on every frame
 local function update() <cexport'update'>
   clear(BLACK)
   draw_rectangle(10, 10, 100, 50, RED)
