@@ -79,7 +79,7 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
             <MenuNav pages={pages} nav={nav} slug={slug} />
           </ul>
         </nav>
-        <div className='max-w-none prose lg:prose-xl dark:prose-invert overflow-x-auto max-w-full mt-8 pb-8'>
+        <div className='max-w-none prose lg:prose-xl dark:prose-invert overflow-x-auto max-w-full mt-8 pb-8 pr-4'>
           <h2>{meta.title}</h2>
           <main>{children}</main>
         </div>
