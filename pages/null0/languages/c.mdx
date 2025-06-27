@@ -32,6 +32,8 @@ zip -rq ../mygame.null0 .
 
 See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
 
+For `clang` command, you can use `-I WHEREVER_NULL0_H_IS` if null0.h is in another directory.
+
 For `zip` command, you can skip packaging some files (like `.DS_Store` and `*.c`) with `-x ".DS_Store" "__*" "*.c" "*.h"` (after all the other options.)
 
 Anything in the zip-file is available in WASI filesystem, or any of the [null0 api](/null0/api), so if you have `cart/logo.png`, and you want to draw it in the middle of the screen, do this:
