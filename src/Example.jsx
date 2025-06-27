@@ -5,9 +5,21 @@ import { useState, useEffect, useRef } from 'react'
 import dark from '@shikijs/themes/vitesse-dark'
 
 // preload all example files
-const code = { ...import.meta.glob('../examples/**/*.js', { eager: true, query: '?raw' }), ...import.meta.glob('../examples/**/*.c', { eager: true, query: '?raw' }) }
+const code = {
+  ...import.meta.glob('../examples/**/*.js', { eager: true, query: '?raw' }),
+  ...import.meta.glob('../examples/**/*.c', { eager: true, query: '?raw' }),
+  ...import.meta.glob('../examples/**/*.nelua', { eager: true, query: '?raw' })
+}
 
-const getLang = (f) => f.split('.').pop()
+const getLang = (f) => {
+  const ext = f.split('.').pop()
+
+  if (ext === 'nelua') {
+    return 'lua'
+  }
+
+  return ext
+}
 
 export default function Example({ src }) {
   const [out, outSet] = useState(null)

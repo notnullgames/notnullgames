@@ -16,7 +16,7 @@ fi
 
 
 # build a C-cart
-BUILDCART() {
+BUILD_CART_C() {
   name="${1}"
   source_dir="${2}"
   echo "CART: C - ${name}"
@@ -29,7 +29,7 @@ BUILDCART() {
 }
 
 # build a JS cart
-BUILDJSCART() {
+BUILD_CART_JS() {
   name="${1}"
   source_dir="${2}"
   echo "CART: JS - ${name}"
@@ -38,13 +38,28 @@ BUILDJSCART() {
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
   cp  "${SCRIPT_DIR}/js/main.wasm" .
-  zip -rq "${CART_DIR}/${name}.null0" . -x "*.c" "*.h" ".DS_Store" "__*"
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
+}
+
+# build a Nelua cart
+BUILD_CART_NELUA() {
+  name="${1}"
+  source_dir="${2}"
+  echo "CART: Nelua - ${name}"
+  rm -rf "/tmp/${name}"
+  mkdir -p "/tmp/${name}"
+  cd "/tmp/${name}"
+  cp -R "${source_dir}"/* .
+  nelua -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
 }
 
 
-BUILDCART "c-logo" "${SCRIPT_DIR}/c/logo"
-BUILDCART "c-circle" "${SCRIPT_DIR}/c/circle"
+BUILD_CART_C "c-logo" "${SCRIPT_DIR}/c/logo"
+BUILD_CART_C "c-circle" "${SCRIPT_DIR}/c/circle"
 
-BUILDJSCART "js-example" "${SCRIPT_DIR}/js/example"
-BUILDJSCART "js-flappy" "${SCRIPT_DIR}/js/flappy"
-BUILDJSCART "js-input" "${SCRIPT_DIR}/js/input"
+BUILD_CART_JS "js-example" "${SCRIPT_DIR}/js/example"
+BUILD_CART_JS "js-flappy" "${SCRIPT_DIR}/js/flappy"
+BUILD_CART_JS "js-input" "${SCRIPT_DIR}/js/input"
+
+BUILD_CART_NELUA "nelua-colorbars" "${SCRIPT_DIR}/nelua/colorbars"

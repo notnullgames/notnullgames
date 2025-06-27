@@ -1,4 +1,6 @@
+import Example from '@/Example'
 import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='🌚'>Nelua is a typed-variant of lua, that compiles directly to WASM. If you are already familiar with lua, you should feel right at home.</Callout>
 
@@ -7,6 +9,37 @@ import Callout from '@/Callout'
 - See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
 - You can use WASI too, so you can use regular file-stuff
 
-<Callout emoji='☠️' className='alert-soft alert-warning'>
-  I have not made a header/library for this language, but it is technically workable. The host will export [null0 api](/null0/api) as well as WASI-preview1. I could [use help](https://github.com/notnullgames/null0)!
-</Callout>
+You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
+
+Here is an example:
+
+<Example src='nelua/colorbars/main.nelua' />
+
+<Null0Cart src='/carts/nelua-colorbars.null0' />
+
+
+Here is how I like to build it (in a shell-script):
+
+```sh
+# location of current file
+SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+
+# where to output carts
+CART_DIR="${SCRIPT_DIR}"
+
+# build a Nelua cart
+BUILD_CART_NELUA() {
+  name="${1}"
+  source_dir="${2}"
+  echo "CART: Nelua - ${name}"
+  rm -rf "/tmp/${name}"
+  mkdir -p "/tmp/${name}"
+  cd "/tmp/${name}"
+  cp -R "${source_dir}"/* .
+  nelua -L "${SCRIPT_DIR}/nelua" "${source_dir}/main.nelua" -r --cc "/opt/wasi-sdk/bin/clang" -o ./main.wasm
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
+}
+
+# do the actual build
+BUILD_CART_NELUA "weird" "${SCRIPT_DIR}/src"
+```
