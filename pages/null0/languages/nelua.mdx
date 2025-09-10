@@ -29,6 +29,6 @@ zip -rq ../mygame.null0 .
 
 See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
 
-For `nelua` command, you can use `--cflags="-I WHEREVER_NULL0_H_IS"` and `-L WHEREVER_NULL0_NELUA_IS`
+For `nelua` command, you can use `--cflags="-I WHEREVER_NULL0_H_IS"` if null0.h is in another location.
 
 For `zip` command, you can skip packaging some files (like `.DS_Store` and `*.nelua`) with `-x ".DS_Store" "__*" "*.nelua"` (after all the other options.)
