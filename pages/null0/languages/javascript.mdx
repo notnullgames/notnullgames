@@ -32,8 +32,6 @@ zip -rq ../mygame.null0 .
 
 See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
 
-You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)
-
 For `zip` command, you can skip packaging some files (like `.DS_Store`) with `-x ".DS_Store" "__*"` (after all the other options.)
 
-If you want a similar language, but with more efficient cart-code, maybe try out [assemblyscript](assemblyscript). It's not exacly the same, and a bit less "loose", but the syntax is pretty similar, and it doesn't need to include the entire quickjs interpretor in your wasm.
+If you want a similar language, but with more efficient cart-code, maybe try out [assemblyscript](assemblyscript). It's not exacly the same, and a bit less "loose", but the syntax is pretty similar, and it doesn't need to include the entire quickjs interpretor in your wasm, so it creates a smaller & more efficient cart.
