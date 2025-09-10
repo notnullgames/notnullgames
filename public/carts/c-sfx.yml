@@ -1,0 +1,5 @@
+title: 'Demo: SFX'
+description: Example of built-in SFX engine (make noises without samples!)
+author: konsumer
+language: C
+source: https://github.com/notnullgames/notnullgames/tree/main/examples/c/sfx

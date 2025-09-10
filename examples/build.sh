@@ -61,6 +61,8 @@ BUILD_CART_NELUA() {
 
 BUILD_CART_C "c-logo" "${SCRIPT_DIR}/c/logo"
 BUILD_CART_C "c-circle" "${SCRIPT_DIR}/c/circle"
+BUILD_CART_C "c-speak" "${SCRIPT_DIR}/c/speak"
+BUILD_CART_C "c-sfx" "${SCRIPT_DIR}/c/sfx"
 
 BUILD_CART_JS "js-example" "${SCRIPT_DIR}/js/example"
 BUILD_CART_JS "js-flappy" "${SCRIPT_DIR}/js/flappy"

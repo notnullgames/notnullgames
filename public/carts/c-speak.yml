@@ -1,0 +1,5 @@
+title: 'Demo: Speak'
+description: Example of built-in TTS engine (make talking game!)
+author: konsumer
+language: C
+source: https://github.com/notnullgames/notnullgames/tree/main/examples/c/speak
