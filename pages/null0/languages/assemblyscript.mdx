@@ -1,16 +1,33 @@
 ---
-sort: 1
+sort: -1
 ---
 
+import Example from '@/Example'
 import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='A'>[Assemblyscript](https://www.assemblyscript.org/) is pretty much typescript, with some builtin-types for WASM. It's a great choice, if you are already familiar with javascirpt or typescript.</Callout>
 
 - See [cart structure](/null0/cart) for more info about how callbacks work.
 - See [API](/null0/api) for more info about the null0 API.
-- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
-- You can use WASI too, so you can use [as-wasi](https://github.com/jedisct1/as-wasi)
+- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/as)
+- You can use WASI too, so all regular C stdlib-file stuff should work.
+- Check out the [Assemblyscript template project](https://github.com/notnullgames/cart_as)
+- You will need [Assemblyscript](https://www.assemblyscript.org/) installed.
 
-<Callout emoji='☠️' className='alert-soft alert-warning'>
-  I have not made a header/library for this language, but it is technically workable. The host will export [null0 api](/null0/api) as well as WASI-preview1. I could [use help](https://github.com/notnullgames/null0)!
-</Callout>
+A simple cart might look like this:
+
+<Example src='as/circle/main.ts' />
+
+<Null0Cart src='/carts/as-circle.null0' />
+
+And then you can compile to a cart with:
+
+```shell
+mkdir -p cart
+asc main.ts --optimize --target release -o "cart/main.wasm" --runtime stub
+cd cart
+zip -rq ../mygame.null0 .
+```
+
+See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.

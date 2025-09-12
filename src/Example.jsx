@@ -9,7 +9,8 @@ const code = {
   ...import.meta.glob('../examples/**/*.js', { eager: true, query: '?raw' }),
   ...import.meta.glob('../examples/**/*.c', { eager: true, query: '?raw' }),
   ...import.meta.glob('../examples/**/*.nelua', { eager: true, query: '?raw' }),
-  ...import.meta.glob('../examples/**/*.nim', { eager: true, query: '?raw' })
+  ...import.meta.glob('../examples/**/*.nim', { eager: true, query: '?raw' }),
+  ...import.meta.glob('../examples/**/*.ts', { eager: true, query: '?raw' })
 }
 
 const getLang = (f) => {

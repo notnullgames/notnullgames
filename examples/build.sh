@@ -70,6 +70,19 @@ BUILD_CART_NIM() {
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nim"
 }
 
+BUILD_CART_AS() {
+  name="${1}"
+  source_dir="${2}"
+  echo "CART: Assemblyscript - ${name}"
+  cd "${source_dir}"
+  rm -rf "/tmp/${name}"
+  mkdir -p "/tmp/${name}"
+  asc main.ts --optimize --target release -o "/tmp/${name}/main.wasm" --runtime stub
+  cd "/tmp/${name}"
+  cp -R "${source_dir}"/* .
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nim"
+}
+
 
 BUILD_CART_C "c-logo" "${SCRIPT_DIR}/c/logo"
 BUILD_CART_C "c-circle" "${SCRIPT_DIR}/c/circle"
@@ -83,3 +96,5 @@ BUILD_CART_JS "js-input" "${SCRIPT_DIR}/js/input"
 BUILD_CART_NELUA "nelua-colorbars" "${SCRIPT_DIR}/nelua/colorbars"
 
 BUILD_CART_NIM "nim-circle" "${SCRIPT_DIR}/nim/circle"
+
+BUILD_CART_AS "as-circle" "${SCRIPT_DIR}/as/circle"
