@@ -11,6 +11,8 @@ import Null0Cart from '@/Null0Cart'
 - Check out the [Nim template project](https://github.com/notnullgames/cart_nim)
 - You will need [wasi-sdk](https://github.com/WebAssembly/wasi-sdk) and [nim](https://nim-lang.org/) installed.
 
+A simple cart might look like this:
+
 <Example src='nim/circle/main.nim' />
 
 <Null0Cart src='/carts/nim-circle.null0' />
@@ -19,7 +21,7 @@ And then you can compile to a cart with:
 
 ```shell
 mkdir -p cart
-/opt/wasi-sdk/bin/clang main.c -o cart/main.wasm
+CC=/opt/wasi-sdk/bin/clang nim c --threads:off --noMain --cc:env -d:release -d:wasi -d:useMalloc --cpu:wasm32 --os:any --passC:"-D_WASI_EMULATED_SIGNAL" --passL:"-lwasi-emulated-signal" --passL:"-Wl,--allow-undefined" -o:cart/main.wasm main.nim
 cd cart
 zip -rq ../mygame.null0 .
 ```
