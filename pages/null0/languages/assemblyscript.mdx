@@ -26,6 +26,7 @@ And then you can compile to a cart with:
 
 ```shell
 mkdir -p cart
+curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/as/null0.ts > null0.ts
 asc main.ts --optimize --target release -o "cart/main.wasm" --runtime stub
 cd cart
 zip -rq ../mygame.null0 .

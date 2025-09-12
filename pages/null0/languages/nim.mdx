@@ -22,6 +22,7 @@ And then you can compile to a cart with:
 
 ```shell
 mkdir -p cart
+curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/nim/null0.nim > null0.nim
 CC=/opt/wasi-sdk/bin/clang nim c --threads:off --noMain --cc:env -d:release -d:wasi -d:useMalloc --cpu:wasm32 --os:any --passC:"-D_WASI_EMULATED_SIGNAL" --passL:"-lwasi-emulated-signal" --passL:"-Wl,--allow-undefined" -o:cart/main.wasm main.nim
 cd cart
 zip -rq ../mygame.null0 .

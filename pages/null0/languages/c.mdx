@@ -26,6 +26,7 @@ And then you can compile to a cart with:
 
 ```shell
 mkdir -p cart
+curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/c/null0.h > null0.h
 /opt/wasi-sdk/bin/clang main.c -o cart/main.wasm
 cd cart
 zip -rq ../mygame.null0 .
