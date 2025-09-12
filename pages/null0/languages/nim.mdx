@@ -1,12 +1,27 @@
+import Example from '@/Example'
 import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='n'>[Nim](https://nim-lang.org/) is a fun language that compiles to C (or C++, or a few more.) It feels a little like python or lua.</Callout>
 
 - See [cart structure](/null0/cart) for more info about how callbacks work.
 - See [API](/null0/api) for more info about the null0 API.
-- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
-- You can use WASI too, so you can use regular file-stuff
+- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/nim)
+- You can use WASI too, so all regular C stdlib-file stuff should work.
+- Check out the [Nim template project](https://github.com/notnullgames/cart_nim)
+- You will need [wasi-sdk](https://github.com/WebAssembly/wasi-sdk) and [nim](https://nim-lang.org/) installed.
 
-<Callout emoji='☠️' className='alert-soft alert-warning'>
-  I have not made a header/library for this language, but it is technically workable. The host will export [null0 api](/null0/api) as well as WASI-preview1. I could [use help](https://github.com/notnullgames/null0)!
-</Callout>
+<Example src='nim/circle/main.nim' />
+
+<Null0Cart src='/carts/nim-circle.null0' />
+
+And then you can compile to a cart with:
+
+```shell
+mkdir -p cart
+/opt/wasi-sdk/bin/clang main.c -o cart/main.wasm
+cd cart
+zip -rq ../mygame.null0 .
+```
+
+See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.

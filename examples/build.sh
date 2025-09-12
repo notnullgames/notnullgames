@@ -58,6 +58,18 @@ BUILD_CART_NELUA() {
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nelua"
 }
 
+BUILD_CART_NIM() {
+  name="${1}"
+  source_dir="${2}"
+  echo "CART: Nim - ${name}"
+  rm -rf "/tmp/${name}"
+  mkdir -p "/tmp/${name}"
+  cd "/tmp/${name}"
+  cp -R "${source_dir}"/* .
+  CC=/opt/wasi-sdk/bin/clang nim c --path:${SCRIPT_DIR}/nim --threads:off --noMain --cc:env -d:release -d:wasi -d:useMalloc --cpu:wasm32 --os:any --passC:"-D_WASI_EMULATED_SIGNAL" --passL:"-lwasi-emulated-signal" --passL:"-Wl,--allow-undefined" -o:main.wasm main.nim
+  zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nim"
+}
+
 
 BUILD_CART_C "c-logo" "${SCRIPT_DIR}/c/logo"
 BUILD_CART_C "c-circle" "${SCRIPT_DIR}/c/circle"
@@ -69,3 +81,5 @@ BUILD_CART_JS "js-flappy" "${SCRIPT_DIR}/js/flappy"
 BUILD_CART_JS "js-input" "${SCRIPT_DIR}/js/input"
 
 BUILD_CART_NELUA "nelua-colorbars" "${SCRIPT_DIR}/nelua/colorbars"
+
+BUILD_CART_NIM "nim-circle" "${SCRIPT_DIR}/nim/circle"
