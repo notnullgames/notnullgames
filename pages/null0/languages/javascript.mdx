@@ -10,7 +10,7 @@ import Null0Cart from '@/Null0Cart'
 - WASI is exposed, and [std](https://bellard.org/quickjs/quickjs.html#std-module) and [os](https://bellard.org/quickjs/quickjs.html#os-module) are available
 - Check out the [JS template project](https://github.com/notnullgames/cart_js)
 - Your code is interpreted with [quickjs](https://bellard.org/quickjs/) compiled as a cart (full WASI & null0 API is available & global.)
-- Include [main.wasm](https://github.com/notnullgames/notnullgames/raw/refs/heads/main/examples/js/main.wasm) in your cart-zip, along with any assets you are using, and make a `main.js`.
+- Include [main.wasm](https://github.com/notnullgames/null0/releases/latest/download/cart-js.wasm) in your cart-zip, along with any assets you are using, and make a `main.js`.
 
 A simple cart might look like this:
 
@@ -24,7 +24,7 @@ And then you can compile to a cart with:
 
 ```sh
 mkdir -p cart
-curl https://github.com/notnullgames/notnullgames/raw/refs/heads/main/examples/js/main.wasm > cart/main.wasm
+curl https://github.com/notnullgames/null0/releases/latest/download/cart-js.wasm > cart/main.wasm
 cp *.js cart
 cd cart
 zip -rq ../mygame.null0 .
