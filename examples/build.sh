@@ -19,6 +19,16 @@ if [ ! -f "${SCRIPT_DIR}/nelua/null0.nelua" ]; then
   curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/nelua/null0.nelua > "${SCRIPT_DIR}/nelua/null0.nelua"
 fi
 
+# grab the current nim-header
+if [ ! -f "${SCRIPT_DIR}/nim/null0.nim" ]; then
+  curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/cart/nim/null0.nim > "${SCRIPT_DIR}/nim/null0.nim"
+fi
+
+# grab the current as-header
+if [ ! -f "${SCRIPT_DIR}/as/null0.ts" ]; then
+  curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/cart/as/null0.ts > "${SCRIPT_DIR}/as/null0.ts"
+fi
+
 # build a C-cart
 BUILD_CART_C() {
   name="${1}"
@@ -41,7 +51,7 @@ BUILD_CART_JS() {
   mkdir -p "/tmp/${name}"
   cd "/tmp/${name}"
   cp -R "${source_dir}"/* .
-  cp  "${SCRIPT_DIR}/js/main.wasm" .
+  cp "${SCRIPT_DIR}/js/cart-js.wasm" main.wam
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*"
 }
 
@@ -58,6 +68,7 @@ BUILD_CART_NELUA() {
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nelua"
 }
 
+# Build a Nim cart
 BUILD_CART_NIM() {
   name="${1}"
   source_dir="${2}"
@@ -70,6 +81,7 @@ BUILD_CART_NIM() {
   zip -rq "${CART_DIR}/${name}.null0" . -x ".DS_Store" "__*" "*.nim"
 }
 
+# Build an assemblyscript cart
 BUILD_CART_AS() {
   name="${1}"
   source_dir="${2}"
