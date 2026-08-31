@@ -5,6 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>notnull games</title>
+    <!-- The cart player is loaded from null0's github-pages. Newer builds of it
+         import their dependencies by absolute URL and need nothing here, but
+         the currently-published one still uses bare specifiers - this map lets
+         the site work against either, so the two repos can be released in any
+         order. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@easywasm/wasi": "https://esm.sh/@easywasm/wasi@0.0.8",
+          "fflate": "https://esm.sh/fflate@0.8.3/esm/browser.js"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root" class="h-full min-h-screen"></div>

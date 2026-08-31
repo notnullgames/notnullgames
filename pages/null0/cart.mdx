@@ -5,38 +5,41 @@ title: Anatomy of a Cart
 
 import Callout from '@/Callout'
 import Null0Cart from '@/Null0Cart'
+import Callbacks from '@/Callbacks'
+import { CDN } from '@/null0'
 
-<Callout emoji='👾'>Games are called *carts* like *cartridges* for old console systems.</Callout>
+<Callout emoji='👾'>Games are called *carts*, like cartridges for old console systems.</Callout>
 
-A cart is made up of a few callbacks. You don't have to implement them all, but whatever you do implement will be called by the host. It's just a zip file, with `main.wasm` in the root. Use functions from the [null0 api](api) to make your game.
+A cart is a zip file with `main.wasm` at the root, plus whatever assets you ship with it. The host loads that wasm, hands it the [null0 API](/null0/api), and calls back into it as the game runs. The extension is `.null0`, but it is an ordinary zip - go ahead and open one.
 
 Here is one, now:
 
-<Null0Cart src='/carts/js-flappy.null0' />
-[source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/flappy/)
+<Null0Cart src={`${CDN}/carts/demo_c.null0`} />
 
-All supported languages should have very simple/similar syntax.
+Your game is made of callbacks. You do not have to implement them all - the host skips any you leave out.
 
-You can find more examples [here](https://github.com/notnullgames/notnullgames/tree/main/examples).
+## lifecycle
 
-### lifecycle
+Three callbacks bracket your game. In C-like pseudo-code:
 
 ```c
-// called on load, you can also use main() in C
+// called once, when the cart is loaded (in C, main() works too)
 void load();
 
-// called on every frame
+// called on every frame - this is where your game lives
 void update();
 
 // called when the cart is unloaded
 void unload();
 ```
 
-### input
+Each language spells these its own way. See [languages](/null0/languages) for yours.
 
-#### keys
+## input
 
-Button input is mapped using [libretro keys](https://docs.libretro.com/guides/input-and-controls/). If the event comes from a keyboard, `player` is set to `9999`. I think it helps to imagine all controllers are an SNES controller for most input-purposes, then you can use `buttonUp`/`buttonDown` for any player.
+### buttons
+
+Button input is mapped from [libretro keys](https://docs.libretro.com/guides/input-and-controls/). It helps to imagine every controller is an SNES pad: use `buttonUp`/`buttonDown` and your game works with a keyboard or a gamepad, for any player. When the event came from a keyboard, `player` is `9999`.
 
 - D-pad: <kbd className="kbd mx-2">▲</kbd><kbd className="kbd mr-2">◀︎</kbd><kbd className="kbd mr-2">▶︎</kbd><kbd className="kbd">▼</kbd>
 - <kbd className='kbd mr-2 bg-yellow-300 text-black'>A</kbd>: <kbd className='kbd mr-2'>z</kbd>
@@ -48,56 +51,47 @@ Button input is mapped using [libretro keys](https://docs.libretro.com/guides/in
 - <kbd className='kbd mr-2 bg-stone-400 text-black'>SELECT</kbd>: <kbd className='kbd mr-2'>shift</kbd>
 - <kbd className='kbd mr-2 bg-stone-400 text-black'>START</kbd>: <kbd className='kbd mr-2'>enter</kbd>
 
-Here is an input-demo, that shows how the keys work:
+Here is an input demo - press some keys:
 
-<Null0Cart src='/carts/js-input.null0' />
-[source](https://github.com/notnullgames/notnullgames/tree/main/examples/js/input/)
+<Null0Cart src={`${CDN}/carts/input_js.null0`} />
 
-Here are the callbacks you can define:
+### the input callbacks
 
-```c
-// mapped controller callback
-void buttonUp(GamepadButton button, unsigned int player);
+These are the rest of the callbacks, straight out of the engine's API definition:
 
-// mapped controller callback
-void buttonDown(GamepadButton button, unsigned int player);
+<Callbacks />
 
-// called when keys are unpressed
-void keyUp(Key key);
+## files
 
-// called when keys are pressed
-void keyDown(Key key);
+Anything in the zip is readable, both through the [null0 image/sound/tilemap functions](/null0/api) and through ordinary WASI file calls. Put `logo.png` in your cart folder and `load_image("logo.png")` finds it.
 
-// called when mouse-button is pressed
-void mouseDown(unsigned int button);
-
-// called when mouse-button is released
-void mouseUp(unsigned int button);
-
-// called when mouse is moved
-void mouseMoved(float x, float y);
-
-```
+Writes go to a per-cart save directory, so a cart can keep a high-score file without being able to touch anything else on the machine. There is no working directory - use absolute paths (`/save.txt`) if your language's file API wants one.
 
 ## running
 
-If you want to run your cart natively, null0 CLI defaults to running `main.null0`, but you can also give it an argument:
+The native runtime defaults to `main.null0`, but takes an argument:
 
 ```sh
 null0 some_cart_directory
 null0 some_cart.null0
 ```
 
-### distribution
+A directory works as well as a zip, which is handy while developing.
 
-To distribute your game to others, you can either save your cart as main.null0, alongside the native runtime (and name the runtime whatever you want) or you can embed it all in one executable:
+## distribution
+
+Ship the `.null0` and let players download [the runtime](https://github.com/notnullgames/null0/releases). Or name your cart `main.null0`, put it next to the runtime, and rename the runtime to your game.
+
+You can also glue them into one executable:
 
 ```sh
 # linux or mac
-cat build/host/null0 build/carts/input_c.null0 > tester
+cat null0 mygame.null0 > mygame && chmod +x mygame
 
 # windows
-copy /b build/host/null0.exe+build/carts/input_c.null0 tester.exe
+copy /b null0.exe+mygame.null0 mygame.exe
 ```
 
-This is very similar to how [love2d works](https://love2d.org/wiki/Game_Distribution).
+This is much the same as [how love2d does it](https://love2d.org/wiki/Game_Distribution).
+
+For the web, the [templates](/null0/quickstart) already publish a playable page to github-pages on every push.

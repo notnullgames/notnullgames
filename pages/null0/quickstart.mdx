@@ -3,20 +3,63 @@ sort: -2
 title: Quick Start
 ---
 
-- Get a programmer's editor. I like [zed](https://zed.dev/), but [vscode](https://code.visualstudio.com/) is a popular choice.
-- Choose from [our templates](https://github.com/search?q=topic%3Acart+org%3Anotnullgames&type=Repositories). Pick a language you want to make your cart in.
-- Press the "Use this template" button and create your own cart repo
-- Do a search in your editor, in your project, for `mygame` and change it to whatever you want to call your game. I recommend names without "weird characters". Just use `A-z`, `0-9`, and `_`.
+import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
 
-Optional: these carts include a few npm actions. To use them install [nodejs](https://nodejs.org/)
+<Callout emoji='🚀'>You need [docker](https://docs.docker.com/get-started/get-docker/) and [node](https://nodejs.org/). You do **not** need a compiler for whatever language you pick - that lives in the docker image.</Callout>
 
-- `npm start` - start a local web-server, and rebuild when your files change. This is great for trying out your ideas.
-- `npm run build` - build your project and output to `webroot/mygame.null0`
+## 1. take a template
 
-I just use them as a way to record scripts in a cross-platform way (and allow use of libraries, etc.)
+Pick a language from [our templates](https://github.com/search?q=topic%3Acart+org%3Anotnullgames&type=Repositories) and press **Use this template** to make your own repo. Every template is the same shape, whichever language you choose:
+
+```
+cart/         your game - source and assets. this whole folder becomes the cart
+webroot/      the web player. only index.html is yours
+package.json  the shortcuts below
+```
+
+## 2. rename it
+
+Search the project for `mygame` and change it to whatever your game is called. Stick to `A-z`, `0-9` and `_`.
+
+## 3. run it
+
+```sh
+npm start
+```
+
+That builds `webroot/mygame.null0`, serves it on a local web-server, and rebuilds every time you save. Edit `cart/`, watch the browser.
+
+To build once, without the server:
+
+```sh
+npm run build
+```
+
+Both are wrappers around one docker command, which you can always run yourself:
+
+```sh
+docker run --rm --user $(id -u):$(id -g) \
+  -v ./cart:/src -v ./webroot:/out \
+  konsumer/null0-cart-c mygame
+```
+
+<Callout emoji='📦' className='alert-soft'>
+  Nothing about null0 is copied into your project - no headers, no interpreter, no copy of the web player. The docker image brings the bindings, and the player is loaded from null0's own site. That means your project cannot fall out of sync with the engine, which is exactly what used to go wrong.
+</Callout>
+
+## 4. publish it
+
+The templates ship two github workflows:
+
+- **Publish** deploys `webroot/` to github-pages on every push to `main`, so anyone can play your game at `https://<you>.github.io/<yourgame>/` without installing anything.
+- **Release** attaches `mygame.null0` to any github release you create.
+
+Players who want it natively download [the runtime](https://github.com/notnullgames/null0/releases) and run `null0 mygame.null0`.
 
 ## ok, now what?
 
-- See [API](/null0/api) for more info about the null0 API.
-- See [Anatomy of a Cart](/null0/cart) to get a feel for what functions to expose to make your game, and how to use it.
-- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/)
+- [Anatomy of a cart](/null0/cart) - the callbacks your game implements, and how input works.
+- [Languages](/null0/languages) - what your language's syntax looks like, and its quirks.
+- [API](/null0/api) - everything you can call.
+- [Gallery](/null0/gallery) - every example cart, playable, with source.
