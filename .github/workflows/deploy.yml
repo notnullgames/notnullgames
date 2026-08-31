@@ -28,6 +28,10 @@ jobs:
           path: dist
   deploy:
     needs: build
+    # a pull_request run cannot deploy to github-pages, so without this every
+    # PR shows a red check for a deploy that was never meant to happen. the
+    # build job above still runs on PRs, which is the part worth checking.
+    if: github.event_name == 'push'
     permissions:
       pages: write
       id-token: write
