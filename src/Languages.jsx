@@ -14,7 +14,7 @@ function Card({ lang }) {
         </h3>
         <p className='text-sm !my-1'>{intro.blurb}</p>
         <div className='text-xs opacity-60'>
-          <code>cart/{lang.file}</code> &middot; <code>null0-cart-{lang.image}</code>
+          <code>cart/{lang.file}</code> &middot; <code>null0-cart-{lang.image}</code> &middot; {lang.kind}
         </div>
       </div>
     </a>

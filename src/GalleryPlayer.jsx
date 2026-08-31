@@ -37,7 +37,7 @@ export default function GalleryPlayer() {
         </a>
       </div>
       <p className='text-sm mt-4'>
-        Built from <code>{cart.id}</code> with <code>konsumer/null0-cart-{language?.image}</code>. Grab{' '}
+        Built from <code>{cart.id}</code> with <code>{language?.imageRef}</code>. Grab{' '}
         <a target='_new' href='https://github.com/notnullgames/null0/releases'>
           the native runtime
         </a>{' '}
