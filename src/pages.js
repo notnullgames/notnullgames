@@ -10,7 +10,9 @@ const titleCase = (str = '') =>
 
 const pages = []
 for (const [filename, m] of Object.entries(import.meta.glob('../pages/**/*.mdx', { eager: true }))) {
-  let slug = filename.replace(/^\.\.\/pages\/([a-zA-Z0-1_\/]+)\.mdx/, `$1`)
+  // note the 0-9: a language like `c3` has a digit in its name, and an
+  // unmatched slug silently becomes the whole filename
+  let slug = filename.replace(/^\.\.\/pages\/([a-zA-Z0-9_\/-]+)\.mdx/, `$1`)
   const nav = slug.split('/')
   const name = nav.pop()
   const PageComponent = m.default

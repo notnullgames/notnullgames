@@ -1,37 +1,8 @@
-import Example from '@/Example'
-import Callout from '@/Callout'
-import Null0Cart from '@/Null0Cart'
+---
+title: Nelua
+sort: 5
+---
 
-<Callout emoji='🌚'>[Nelua](https://nelua.io/) is a typed-variant of lua, that compiles directly to WASM. If you are already familiar with lua, you should feel right at home.</Callout>
+import LanguagePage from '@/LanguagePage'
 
-- See [cart structure](/null0/cart) for more info about how callbacks work.
-- See [API](/null0/api) for more info about the null0 API.
-- See [examples](https://github.com/notnullgames/notnullgames/tree/main/examples/nelua)
-- You can use WASI too, so you can use regular file-stuff
-- Check out the [Nelua template project](https://github.com/notnullgames/cart_nelua)
-- You need [null0.h](https://github.com/notnullgames/null0/blob/main/carts/c/null0.h) and [null0.nelua](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua)
-- You will need wasi-sdk](https://github.com/WebAssembly/wasi-sdk) installed.
-- The definitive header is [here](https://github.com/notnullgames/null0/blob/main/carts/nelua/null0.nelua), so use that to ensure yours is up-to-date
-
-A simple cart might look like this:
-
-<Example src='nelua/colorbars/main.nelua' />
-
-<Null0Cart src='/carts/nelua-colorbars.null0' />
-
-And then you can compile to a cart with:
-
-```sh
-mkdir -p cart
-curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/nelua/null0.nelua > null0.nelua
-curl https://raw.githubusercontent.com/notnullgames/null0/refs/heads/main/carts/c/null0.h > null0.h
-nelua main.nelua -r --cc "/opt/wasi-sdk/bin/clang" -o ./cart/main.wasm
-cd cart
-zip -rq ../mygame.null0 .
-```
-
-See [build.sh](https://github.com/notnullgames/notnullgames/tree/main/examples/build.sh) for an example of how I build for this example-site.
-
-For `nelua` command, you can use `--cflags="-I WHEREVER_NULL0_H_IS"` if null0.h is in another location.
-
-For `zip` command, you can skip packaging some files (like `.DS_Store` and `*.nelua`) with `-x ".DS_Store" "__*" "*.nelua"` (after all the other options.)
+<LanguagePage lang='nelua' />

@@ -1,25 +1,25 @@
-import Null0Cart from '@/Null0Cart'
+import { getLanguage } from '@/null0'
 
-// TODO: there is not a great way to completely wipe a wasm, but it would be better if I could remove/add the wasm
-
-export default function CartCard({ id, title, description, author, language, source }) {
-  const displayTitle = title || id
+export default function CartCard({ id, name, lang, title, cart, source }) {
+  const language = getLanguage(lang)
   return (
-    <div className='card bg-base-300 w-96 shadow-s z-0'>
+    <div className='card bg-base-300 w-80 shadow-sm'>
       <div className='card-body'>
-        <h2 className='card-title !my-0'>{displayTitle}</h2>
-        {author && <div className='text-xs mb-2'>{author}</div>}
-        {/*<Null0Cart src={`/carts/${id}.null0`} />*/}
-        <img src={`/carts/${id}.png`} alt={displayTitle} />
-        {description && <div>{description}</div>}
+        <h3 className='card-title !my-0'>{name}</h3>
+        <div className='text-xs opacity-70 mb-2'>
+          {title}
+          {language?.kind === 'interpreted' ? ' (interpreted)' : ''}
+        </div>
         <div className='card-actions justify-end'>
-          <a target='_new' href={source} className='btn btn-secondary'>
-            Source
-          </a>
-          <a download href={`/carts/${id}.null0`} className='btn btn-secondary'>
+          {source && (
+            <a target='_new' href={source} className='btn btn-sm btn-secondary'>
+              Source
+            </a>
+          )}
+          <a download href={cart} className='btn btn-sm btn-secondary'>
             Download
           </a>
-          <a href={`/gallery/${id}`} className='btn btn-primary'>
+          <a href={`/gallery/${id}`} className='btn btn-sm btn-primary'>
             Play
           </a>
         </div>

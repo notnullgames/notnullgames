@@ -3,13 +3,20 @@ title: null0
 ---
 
 import Callout from '@/Callout'
+import Null0Cart from '@/Null0Cart'
+import { CDN, languages, cartList } from '@/null0'
 
-<Callout emoji={<img src='/logo.svg' className='h-12 w-12 !m-0' />}>Null0 is a fun & easy engine for making games that run in browser, and natively on any kind of computer, using any supported language.</Callout>
+<Callout emoji={<img src='/logo.svg' className='h-12 w-12 !m-0' />}>null0 is a small fantasy console. You write a game in whatever language you like, and it runs in a browser and natively on anything - mac, windows, linux, a raspberry pi.</Callout>
 
-It's good for learning & playing.
+<Null0Cart src={`${CDN}/carts/demo_lua.null0`} />
 
-You can find the project [on github](https://github.com/notnullgames/null0).
+A game is a ["cart"](/null0/cart): a zip file with `main.wasm` in it, plus your assets. Anything that compiles to WebAssembly can be a cart, and <strong>{languages.length} languages</strong> have real bindings, examples, and a docker image that builds them - from C, Rust and Zig to Lua, Python and Haskell.
 
-Nullo games are called ["carts"](/null0/cart) which is just a zip-file with any assets + main.wasm that is needed to run your game. You can make that wasm in any language that supports that (quite a few.)
+[The API](/null0/api) is small enough to learn in an afternoon: draw things, play sounds, read input, load a Tiled map. Every language gets the same one.
 
-[The API](/null0/api) is simple & easy to use, in any language.
+- [Quick start](/null0/quickstart) - a running game in about two minutes
+- [Languages](/null0/languages) - pick yours, and see what a cart looks like in it
+- [Gallery](/null0/gallery) - all {cartList.length} example carts, playable
+- [The project on github](https://github.com/notnullgames/null0)
+
+It is good for learning, for jams, and for the kind of small game that should not need a 3GB engine.
