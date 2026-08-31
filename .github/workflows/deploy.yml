@@ -34,7 +34,8 @@ jobs:
     # a pull_request run cannot deploy to github-pages, so without this every
     # PR shows a red check for a deploy that was never meant to happen. the
     # build job above still runs on PRs, which is the part worth checking.
-    if: github.event_name == 'push'
+    # anything that isn't a PR (push, manual rebuild) does deploy.
+    if: github.event_name != 'pull_request'
     permissions:
       pages: write
       id-token: write
