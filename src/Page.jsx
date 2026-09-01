@@ -74,8 +74,13 @@ export default function Page({ children, pages = [], meta, slug, nav }) {
         </nav>
       </header>
       <div className='flex mt-23 gap-4'>
-        <nav className='p-4 bg-base-200 text-base-content min-h-screen'>
-          <ul className='menu rounded-box bg-base-200 text-base-content ml-4 sticky top-28'>
+        {/* The nav is taller than the viewport once every language is listed, so
+            it gets its own scroll rather than dragging the page with it.
+            self-start matters: a flex child is stretched by default, which made
+            the column full document height and stopped `sticky` doing anything.
+            top-23 / 5.75rem is the fixed header's height. */}
+        <nav className='sticky top-23 self-start h-[calc(100vh-5.75rem)] shrink-0 overflow-y-auto overscroll-contain p-4 bg-base-200 text-base-content'>
+          <ul className='menu rounded-box bg-base-200 text-base-content ml-4'>
             <MenuNav pages={pages} nav={nav} slug={slug} />
           </ul>
         </nav>
