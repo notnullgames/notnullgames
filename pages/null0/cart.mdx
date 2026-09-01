@@ -5,7 +5,6 @@ title: Anatomy of a Cart
 
 import Callout from '@/Callout'
 import Null0Cart from '@/Null0Cart'
-import Callbacks from '@/Callbacks'
 import { CDN } from '@/null0'
 
 <Callout emoji='👾'>Games are called *carts*, like cartridges for old console systems.</Callout>
@@ -57,9 +56,24 @@ Here is an input demo - press some keys:
 
 ### the input callbacks
 
-These are the rest of the callbacks, straight out of the engine's API definition:
+These are the rest of the callbacks:
 
-<Callbacks />
+```c
+// mapped controller (keys and gamepad both trigger these)
+void buttonDown(GamepadButton button, u32 player);
+void buttonUp(GamepadButton button, u32 player);
+
+// raw keyboard
+void keyDown(Key key);
+void keyUp(Key key);
+
+// mouse
+void mouseDown(MouseButton button);
+void mouseUp(MouseButton button);
+void mouseMoved(f32 x, f32 y);
+```
+
+The [API reference](/null0/api#callbacks) has the authoritative list, generated from the engine.
 
 ## files
 

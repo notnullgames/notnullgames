@@ -1,6 +1,7 @@
 // Every API function in one language's syntax, grouped and collapsible.
 
 import { api } from '@/null0'
+import Code from '@/Code'
 
 export default function ApiList({ lang }) {
   return (
@@ -13,9 +14,9 @@ export default function ApiList({ lang }) {
           {Object.entries(funcs).map(([name, def]) => (
             <div key={name} id={`${lang.id}-${name}`} className='scroll-mt-32'>
               <p className='!mb-1 !mt-4 text-sm opacity-80'>{def.description}</p>
-              <pre className='!mt-0 overflow-x-auto'>
-                <code>{lang.decls[name] || `${def.returns} ${name}(...)`}</code>
-              </pre>
+              <Code lang={lang.highlight} className='!mt-0'>
+                {lang.decls[name] || `${def.returns} ${name}(...)`}
+              </Code>
             </div>
           ))}
         </details>

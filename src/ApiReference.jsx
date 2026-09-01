@@ -7,6 +7,7 @@
 import { useState } from 'react'
 import { api, languages, REPO } from '@/null0'
 import LanguagePicker from '@/LanguagePicker'
+import Code from '@/Code'
 
 const PSEUDO = { id: '', title: 'pseudo-code', highlight: 'c' }
 
@@ -18,10 +19,11 @@ const pseudoSignature = (name, def) =>
 
 function Signature({ name, def, lang }) {
   const decl = lang?.decls?.[name]
+  // pseudo-code is C-like; a real declaration gets its own language's grammar
   return (
-    <pre className='!my-2 overflow-x-auto'>
-      <code>{decl || pseudoSignature(name, def)}</code>
-    </pre>
+    <Code lang={lang?.highlight || 'c'} className='!my-2'>
+      {decl || pseudoSignature(name, def)}
+    </Code>
   )
 }
 
@@ -82,13 +84,11 @@ export default function ApiReference() {
         <div key={name}>
           <h4 className='!mb-1'>{name}</h4>
           <p className='!my-1'>{s.description}</p>
-          <pre className='!my-2 overflow-x-auto'>
-            <code>
-              {Object.entries(s.members)
-                .map(([m, t]) => `${t} ${m}`)
-                .join('\n')}
-            </code>
-          </pre>
+          <Code lang='c' className='!my-2'>
+            {Object.entries(s.members)
+              .map(([m, t]) => `${t} ${m}`)
+              .join('\n')}
+          </Code>
         </div>
       ))}
 
@@ -99,13 +99,11 @@ export default function ApiReference() {
           <summary>
             <code>{name}</code> - {e.description}
           </summary>
-          <pre className='overflow-x-auto'>
-            <code>
-              {Object.entries(e.enums)
-                .map(([n, v]) => `${n} = ${v}`)
-                .join('\n')}
-            </code>
-          </pre>
+          <Code lang='c'>
+            {Object.entries(e.enums)
+              .map(([n, v]) => `${n} = ${v}`)
+              .join('\n')}
+          </Code>
         </details>
       ))}
 
@@ -138,11 +136,7 @@ export default function ApiReference() {
       <p>
         Callbacks are how you define your game - implement the ones you need and the host skips the rest. See <a href='/null0/cart'>anatomy of a cart</a>.
       </p>
-      {lang && (
-        <pre className='overflow-x-auto'>
-          <code>{lang.callback}</code>
-        </pre>
-      )}
+      {lang && <Code lang={lang.highlight}>{lang.callback}</Code>}
       {Object.entries(api.callbacks).map(([name, def]) => (
         <Func key={name} name={name} def={def} lang={null} />
       ))}

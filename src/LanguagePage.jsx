@@ -10,6 +10,7 @@ import Callout from '@/Callout'
 import Example from '@/Example'
 import Null0Cart from '@/Null0Cart'
 import ApiList from '@/ApiList'
+import Code from '@/Code'
 
 export default function LanguagePage({ lang: id }) {
   const lang = getLanguage(id)
@@ -56,9 +57,7 @@ export default function LanguagePage({ lang: id }) {
 
       <h2>building</h2>
       <p>You do not install {lang.toolchain} - the docker image has it, and the current null0 bindings, baked in. That is the whole point: there is nothing in your project to keep in sync with the engine.</p>
-      <pre className='overflow-x-auto'>
-        <code>{docker}</code>
-      </pre>
+      <Code lang='bash'>{docker}</Code>
       <p>
         The{' '}
         <a target='_new' href={`https://github.com/notnullgames/cart_${id}`}>
@@ -92,9 +91,7 @@ export default function LanguagePage({ lang: id }) {
 
       <h2>callbacks</h2>
       <p>A cart implements the callbacks it cares about. In {lang.title} they look like this:</p>
-      <pre className='overflow-x-auto'>
-        <code>{lang.callback}</code>
-      </pre>
+      <Code lang={lang.highlight}>{lang.callback}</Code>
       <p>
         See <a href='/null0/cart'>anatomy of a cart</a> for the full list and what each one is passed.
       </p>
