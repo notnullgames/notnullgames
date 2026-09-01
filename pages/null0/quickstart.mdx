@@ -8,7 +8,9 @@ import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='🚀'>You need [docker](https://docs.docker.com/get-started/get-docker/) and [node](https://nodejs.org/). You do **not** need a compiler for whatever language you pick - that lives in the docker image.</Callout>
 
-## 1. take a template
+First, install docker. You can make null0 carts without it, but we use that to simplify build-tools.
+
+## 1. choose a template
 
 Pick a language from [our templates](https://github.com/search?q=topic%3Acart+org%3Anotnullgames&type=Repositories) and press **Use this template** to make your own repo. Every template is the same shape, whichever language you choose:
 
@@ -45,7 +47,7 @@ docker run --rm --user $(id -u):$(id -g) \
 ```
 
 <Callout emoji='📦' className='alert-soft'>
-  Nothing about null0 is copied into your project - no headers, no interpreter, no copy of the web player. The docker image brings the bindings, and the player is loaded from null0's own site. That means your project cannot fall out of sync with the engine, which is exactly what used to go wrong.
+  Nothing about null0 is copied into your project. The docker image brings the bindings, and the web-player is loaded from null0's site.
 </Callout>
 
 ## 4. publish it
