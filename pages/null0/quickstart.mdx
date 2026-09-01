@@ -8,9 +8,14 @@ import Null0Cart from '@/Null0Cart'
 
 <Callout emoji='🚀'>You need [docker](https://docs.docker.com/get-started/get-docker/) and [node](https://nodejs.org/). You do **not** need a compiler for whatever language you pick - that lives in the docker image.</Callout>
 
-First, install docker. You can make null0 carts without it, but we use that to simplify build-tools.
+## 1. install system-tools
 
-## 1. choose a template
+We use `npm` to record tasks, and docker to do the actual build. You can build carts without these, but it helps unify & simplify. Install these first:
+
+- [docker](https://docs.docker.com/engine/install/)
+- [node](https://nodejs.org/en/download)
+
+## 2. choose a template
 
 Pick a language from [our templates](https://github.com/search?q=topic%3Acart+org%3Anotnullgames&type=Repositories) and press **Use this template** to make your own repo. Every template is the same shape, whichever language you choose:
 
@@ -20,11 +25,11 @@ webroot/      the web player. only index.html is yours
 package.json  the shortcuts below
 ```
 
-## 2. rename it
+## 3. rename it
 
 Search the project for `mygame` and change it to whatever your game is called. Stick to `A-z`, `0-9` and `_`.
 
-## 3. run it
+## 4. run it
 
 ```sh
 npm start
