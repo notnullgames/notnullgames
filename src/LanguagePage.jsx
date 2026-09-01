@@ -18,9 +18,12 @@ export default function LanguagePage({ lang: id }) {
   const cart = cartList.find((c) => c.lang === id && c.name === 'simple')
   const demos = cartList.filter((c) => c.lang === id && c.name !== 'simple')
 
+  // the engine publishes the full image ref in api.json, so this page can't
+  // drift if the registry ever moves again
+  const image = lang.imageRef || `ghcr.io/notnullgames/null0-cart-${lang.image}:latest`
   const docker = `docker run --rm --user $(id -u):$(id -g)${lang.amd64Only ? ' --platform linux/amd64' : ''} \\
   -v ./cart:/src -v ./webroot:/out \\
-  konsumer/null0-cart-${lang.image} mygame`
+  ${image} mygame`
 
   return (
     <>
@@ -35,7 +38,7 @@ export default function LanguagePage({ lang: id }) {
           - press "Use this template" and you have a working game.
         </li>
         <li>
-          <strong>Docker image:</strong> <code>konsumer/null0-cart-{lang.image}</code>
+          <strong>Docker image:</strong> <code>{image}</code>
           {lang.amd64Only && <> (linux/amd64 only - runs emulated on Apple Silicon)</>}
         </li>
         <li>
