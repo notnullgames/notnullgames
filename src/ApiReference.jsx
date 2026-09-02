@@ -4,9 +4,9 @@
 // declaration - not a transliteration written here, but the line out of that
 // language's generated bindings, so it is exactly what your editor sees.
 
-import { useState, useEffect } from 'react'
 import { api, languages, REPO } from '@/null0'
 import LanguagePicker from '@/LanguagePicker'
+import useLanguageHash from '@/useLanguageHash'
 import Code from '@/Code'
 
 const PSEUDO = { id: '', title: 'pseudo-code', highlight: 'c' }
@@ -38,30 +38,7 @@ function Func({ name, def, lang }) {
 }
 
 export default function ApiReference() {
-  const [langId, langIdSet] = useState('')
-
-  // /null0/api#zig arrives here pre-selected, so a language's signatures are
-  // linkable. The page also uses the hash for function and group anchors
-  // (#draw_circle, #graphics), so only a hash that names a language is
-  // treated as one - anything else is left alone to scroll as normal.
-  useEffect(() => {
-    const fromHash = () => {
-      const hash = decodeURIComponent(location.hash.replace(/^#/, ''))
-      if (hash in api.languages) {
-        langIdSet(hash)
-      }
-    }
-    fromHash()
-    addEventListener('hashchange', fromHash)
-    return () => removeEventListener('hashchange', fromHash)
-  }, [])
-
-  // keep the URL shareable as you switch. replaceState rather than assigning
-  // location.hash: no history entry per pick, and no scroll jump.
-  const pick = (id) => {
-    langIdSet(id)
-    history.replaceState(null, '', id ? `#${id}` : location.pathname + location.search)
-  }
+  const [langId, pick] = useLanguageHash()
   const lang = langId ? api.languages[langId] : null
 
   return (
