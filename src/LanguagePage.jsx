@@ -16,8 +16,9 @@ export default function LanguagePage({ lang: id }) {
   const lang = getLanguage(id)
   const intro = intros[id] || {}
   const source = sources[id]
-  const cart = cartList.find((c) => c.lang === id && c.name === 'simple')
-  const demos = cartList.filter((c) => c.lang === id && c.name !== 'simple')
+  const langCarts = cartList.filter((c) => c.lang === id)
+  const cart = langCarts.find((c) => c.name === 'simple')
+  const demos = langCarts.filter((c) => c.name !== 'simple')
 
   // the engine publishes the full image ref in api.json, so this page can't
   // drift if the registry ever moves again
@@ -56,7 +57,7 @@ export default function LanguagePage({ lang: id }) {
       </ul>
 
       <h2>building</h2>
-      <p>You do not install {lang.toolchain} - the docker image has it, and the current null0 bindings, baked in. That is the whole point: there is nothing in your project to keep in sync with the engine.</p>
+      <p>You do not install {lang.toolchain} - the docker image has it, and the current null0 bindings, baked in. There is nothing in your project to keep in sync with the engine.</p>
       <Code lang='bash'>{docker}</Code>
       <p>
         The{' '}
@@ -96,19 +97,24 @@ export default function LanguagePage({ lang: id }) {
         See <a href='/null0/cart'>anatomy of a cart</a> for the full list and what each one is passed.
       </p>
 
-      {demos.length > 0 && (
+      {langCarts.length > 0 && (
         <>
           <h2>more {lang.title} carts</h2>
-          <ul>
-            {demos.map((c) => (
-              <li key={c.id}>
-                <a href={`/gallery/${c.id}`}>{c.name}</a> -{' '}
-                <a target='_new' href={c.source}>
-                  source
-                </a>
-              </li>
-            ))}
-          </ul>
+          {demos.length > 0 && (
+            <ul>
+              {demos.map((c) => (
+                <li key={c.id}>
+                  <a href={`/gallery/${c.id}`}>{c.name}</a> -{' '}
+                  <a target='_new' href={c.source}>
+                    source
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p>
+            <a href={`/null0/gallery#${lang.id}`}>See carts made with {lang.title}</a> - all {langCarts.length} of them in the gallery, playable in the browser.
+          </p>
         </>
       )}
 
@@ -121,7 +127,7 @@ export default function LanguagePage({ lang: id }) {
         themselves, so they match what your editor completes.
       </p>
       <p>
-        Grouped below, or read them alongside each function's description on the <a href={`/null0/api#${lang.id}`}>full API reference</a> - that link opens it already set to {lang.title}.
+        Grouped below, or read them alongside each function's description on the <a href={`/null0/api#${lang.id}`}>full API reference</a>.
       </p>
       <ApiList lang={lang} />
     </>
