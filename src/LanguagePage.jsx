@@ -9,16 +9,13 @@ import intros from '@/languageIntros'
 import Callout from '@/Callout'
 import Example from '@/Example'
 import Null0Cart from '@/Null0Cart'
-import ApiList from '@/ApiList'
 import Code from '@/Code'
 
 export default function LanguagePage({ lang: id }) {
   const lang = getLanguage(id)
   const intro = intros[id] || {}
   const source = sources[id]
-  const langCarts = cartList.filter((c) => c.lang === id)
-  const cart = langCarts.find((c) => c.name === 'simple')
-  const demos = langCarts.filter((c) => c.name !== 'simple')
+  const cart = cartList.find((c) => c.lang === id && c.name === 'simple')
 
   // the engine publishes the full image ref in api.json, so this page can't
   // drift if the registry ever moves again
@@ -54,6 +51,12 @@ export default function LanguagePage({ lang: id }) {
           {lang.reference ? ' (a reference list to copy from)' : lang.kind === 'interpreted' ? ' (editor definitions - the runtime provides the API itself)' : ' (baked into the docker image for you)'}
         </li>
         <li>WASI is available, so ordinary file and stdio calls work.</li>
+        <li>
+          <a href={`/null0/gallery#${lang.id}`}>See carts made with {lang.title}</a>
+        </li>
+        <li>
+          <a href={`/null0/api#${lang.id}`}>API docs for {lang.title}</a>
+        </li>
       </ul>
 
       <h2>building</h2>
@@ -96,40 +99,6 @@ export default function LanguagePage({ lang: id }) {
       <p>
         See <a href='/null0/cart'>anatomy of a cart</a> for the full list and what each one is passed.
       </p>
-
-      {langCarts.length > 0 && (
-        <>
-          <h2>more {lang.title} carts</h2>
-          {demos.length > 0 && (
-            <ul>
-              {demos.map((c) => (
-                <li key={c.id}>
-                  <a href={`/gallery/${c.id}`}>{c.name}</a> -{' '}
-                  <a target='_new' href={c.source}>
-                    source
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-          <p>
-            <a href={`/null0/gallery#${lang.id}`}>See carts made with {lang.title}</a> - all {langCarts.length} of them in the gallery, playable in the browser.
-          </p>
-        </>
-      )}
-
-      <h2>the API, in {lang.title}</h2>
-      <p>
-        Every null0 function, spelled the way {lang.title} spells it. These are read out of{' '}
-        <a target='_new' href={`${RAW}/${lang.binding}`}>
-          the generated bindings
-        </a>{' '}
-        themselves, so they match what your editor completes.
-      </p>
-      <p>
-        Grouped below, or read them alongside each function's description on the <a href={`/null0/api#${lang.id}`}>full API reference</a>.
-      </p>
-      <ApiList lang={lang} />
     </>
   )
 }
