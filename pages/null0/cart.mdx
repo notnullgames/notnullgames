@@ -106,6 +106,8 @@ cat null0 mygame.null0 > mygame && chmod +x mygame
 copy /b null0.exe+mygame.null0 mygame.exe
 ```
 
-This is much the same as [how love2d does it](https://love2d.org/wiki/Game_Distribution).
+This is much the same as [how love2d does it](https://love2d.org/wiki/Game_Distribution). It works because the runtime looks for a zip appended to its own executable, so the cart bytes are identical whether they sit in a `.null0` or on the end of a binary.
 
-For the web, the [templates](/null0/quickstart) already publish a playable page to github-pages on every push.
+You do not have to do it by hand. The [templates](/null0/quickstart) ship a **Release** workflow that, for every github release you cut, downloads the current runtime for each platform and attaches `mygame_linux_x86-64.zip`, `mygame_macos.zip` and `mygame_windows_x64.zip` alongside the `.null0`.
+
+For the web, the templates also publish a playable page to github-pages on every push.
