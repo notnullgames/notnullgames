@@ -120,6 +120,9 @@ export default function LanguagePage({ lang: id }) {
         </a>{' '}
         themselves, so they match what your editor completes.
       </p>
+      <p>
+        Grouped below, or read them alongside each function's description on the <a href={`/null0/api#${lang.id}`}>full API reference</a> - that link opens it already set to {lang.title}.
+      </p>
       <ApiList lang={lang} />
     </>
   )

@@ -4,7 +4,7 @@
 // declaration - not a transliteration written here, but the line out of that
 // language's generated bindings, so it is exactly what your editor sees.
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { api, languages, REPO } from '@/null0'
 import LanguagePicker from '@/LanguagePicker'
 import Code from '@/Code'
@@ -39,6 +39,29 @@ function Func({ name, def, lang }) {
 
 export default function ApiReference() {
   const [langId, langIdSet] = useState('')
+
+  // /null0/api#zig arrives here pre-selected, so a language's signatures are
+  // linkable. The page also uses the hash for function and group anchors
+  // (#draw_circle, #graphics), so only a hash that names a language is
+  // treated as one - anything else is left alone to scroll as normal.
+  useEffect(() => {
+    const fromHash = () => {
+      const hash = decodeURIComponent(location.hash.replace(/^#/, ''))
+      if (hash in api.languages) {
+        langIdSet(hash)
+      }
+    }
+    fromHash()
+    addEventListener('hashchange', fromHash)
+    return () => removeEventListener('hashchange', fromHash)
+  }, [])
+
+  // keep the URL shareable as you switch. replaceState rather than assigning
+  // location.hash: no history entry per pick, and no scroll jump.
+  const pick = (id) => {
+    langIdSet(id)
+    history.replaceState(null, '', id ? `#${id}` : location.pathname + location.search)
+  }
   const lang = langId ? api.languages[langId] : null
 
   return (
@@ -51,7 +74,7 @@ export default function ApiReference() {
         , for null0 <code>{api.version}</code>. Pick a language to see every signature in that language's own spelling.
       </p>
 
-      <LanguagePicker value={langId} onChange={langIdSet} emptyLabel='pseudo-code' />
+      <LanguagePicker value={langId} onChange={pick} emptyLabel='pseudo-code' />
 
       <p className='text-sm'>
         Showing <strong>{lang ? lang.title : PSEUDO.title}</strong>.{' '}
